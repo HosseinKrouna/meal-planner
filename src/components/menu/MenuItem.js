@@ -2,11 +2,12 @@ import Image from "next/image";
 
 function MenuItem() {
 	return (
-		<div className="bg-gray-200 p-4 rounded-lg text-center">
+		<div className="mb-4 bg-gray-200 p-4 rounded-lg text-center group hover:bg-white transition-all hover:shadow-md hover:shadow-black/25">
 			<Image
-				src={"/photo-home-menu-pita.jpg"}
-				width={350}
-				height={290}
+				className="max-h-auto max-h-24 block mx-auto  object-contain"
+				src={"/photo-home-menu-pita.png"}
+				width={500}
+				height={200}
 				alt="Vegan gyros in pita bread with tzatziki"
 			/>
 			<h4 className="font-semibold text-xl my-3">
