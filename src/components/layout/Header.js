@@ -32,7 +32,7 @@ function Header() {
 				</button>
 			</div>
 
-			{/*Mobile Navigatin*/}
+			{/*Mobile Navigation*/}
 			{showMenu && (
 				<div className="fixed top-16 right-4 z-50 bg-white rounded shadow-xl p-4">
 					<Link
