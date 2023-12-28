@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Right from "../icons/Right";
 
 function Hero() {
 	return (
 		<section className="grid grid-cols-1 md:grid-cols-2 p-4 md:p-8 max-w-full md:max-w-screen-lg mx-auto overflow-x-hidden">
-			<div className="order-2 md:order-1">
+			<div className="order-2 md:order-1 py-12">
 				<h1 className="text-2xl md:text-4xl font-semibold mb-4 md:mb-6">
 					Gesunde Speisepläne für ein besseres Leben
 				</h1>
@@ -13,11 +14,15 @@ function Hero() {
 					helfen, deine Ziele zu erreichen – egal, ob du abnehmen, mehr Energie
 					haben oder einfach gesünder leben möchtest!
 				</p>
-				<div className="flex flex-col md:flex-row gap-4">
-					<button className="bg-primary text-white px-8 py-2 rounded-full">
+				<div className="flex  text-sm flex-col md:flex-row gap-4">
+					<button className="flex items-center gap-4 bg-primary uppercase text-white px-4 py-2 rounded-full">
 						Wähle jetzt
+						<Right />
 					</button>
-					<button className="border px-4 py-2 rounded-full">Learn more</button>
+					<button className="flex items-center gap-2 px-4 py-2  text-gray-600 font-semibold">
+						Learn more
+						<Right />
+					</button>
 				</div>
 			</div>
 
