@@ -1,56 +1,83 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 function ReigisterPage() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
+	const [fewCharactersMessage, setFewCharactersMessage] = useState("");
+	const [creatingUser, setCreatingUser] = useState(false);
+	const [userCreated, setUserCreated] = useState(false);
+	const [error, setError] = useState(false);
 
-	function handleFormSubmit(event) {
+	async function handleFormSubmit(event) {
 		event.preventDefault();
+
+		setCreatingUser(true);
+		setError(false);
+		setUserCreated(false);
+
 		if (password.length < 5) {
-			setError("Das Passwort muss mindestens 5 Zeichen lang sein");
+			setFewCharactersMessage(
+				"Das Passwort muss mindestens 5 Zeichen lang sein"
+			);
 		} else {
-			fetch("/api/register", {
+			const response = await fetch("/api/register", {
 				method: "POST",
 				body: JSON.stringify({ email, password }),
 				headers: { "Content-Type": "application/json" },
-			})
-				.then((response) => {
-					if (!response.ok) {
-						throw new Error("Network response was not ok");
-					}
-					return response.json();
-				})
-				.then((data) => {
-					console.log("Registration successful!", data);
-				})
-				.catch((error) => {
-					console.error("There was an error registering:", error);
-				});
-			setError("");
+			});
+
+			if (response.ok) {
+				setUserCreated(true);
+			} else {
+				setError(true);
+			}
+
+			setCreatingUser(false);
 		}
 	}
 
 	return (
 		<section className="mt-10">
 			<h1 className="text-center mb-4 text-primary text-4xl">Register</h1>
-			{error && <div className="text-red-500">{error}</div>}
+			{userCreated && (
+				<div className="my-4 text-center">
+					User erstellt.
+					<br />
+					Du kannst dich gleich einloggen{" "}
+					<Link className="underline" href={"/login"}>
+						Login
+					</Link>
+				</div>
+			)}
+			{error && (
+				<div className="my-4 text-center">
+					Ein Fehler ist aufgetreten. Versuche es später noch einmal.
+				</div>
+			)}
+			{fewCharactersMessage && (
+				<div className="text-red-500">{fewCharactersMessage}</div>
+			)}
 			<form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}>
 				<input
 					type="email"
 					placeholder="email"
 					value={email}
+					disabled={creatingUser}
 					onChange={(event) => setEmail(event.target.value)}
 				/>
 				<input
 					type="password"
 					placeholder="password"
 					value={password}
+					disabled={creatingUser}
 					onChange={(event) => setPassword(event.target.value)}
 				/>
-				<button type="submit">Register</button>
+				<button type="submit" disabled={creatingUser}>
+					Register
+				</button>
 				<div className="my-4 text-center text-gray-600">
 					oder Log dich mit einem Provider an
 				</div>
@@ -63,6 +90,12 @@ function ReigisterPage() {
 					/>
 					Login mit Google
 				</button>
+				<div>
+					Kein Konto?{" "}
+					<Link className="underline" href={"/login"}>
+						Login hier &raquo;
+					</Link>
+				</div>
 			</form>
 		</section>
 	);
