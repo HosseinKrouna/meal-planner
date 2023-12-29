@@ -5,19 +5,38 @@ import { useState } from "react";
 function ReigisterPage() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [error, setError] = useState("");
 
 	function handleFormSubmit(event) {
 		event.preventDefault();
-		fetch("/api/register", {
-			method: "POST",
-			body: JSON.stringify({ email, password }),
-			headers: { "Content-Type": "application/json" },
-		});
+		if (password.length < 5) {
+			setError("Das Passwort muss mindestens 5 Zeichen lang sein");
+		} else {
+			fetch("/api/register", {
+				method: "POST",
+				body: JSON.stringify({ email, password }),
+				headers: { "Content-Type": "application/json" },
+			})
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error("Network response was not ok");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					console.log("Registration successful!", data);
+				})
+				.catch((error) => {
+					console.error("There was an error registering:", error);
+				});
+			setError("");
+		}
 	}
 
 	return (
 		<section className="mt-10">
 			<h1 className="text-center mb-4 text-primary text-4xl">Register</h1>
+			{error && <div className="text-red-500">{error}</div>}
 			<form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}>
 				<input
 					type="email"
