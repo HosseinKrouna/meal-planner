@@ -1,1 +1,3 @@
-export function POST(reg) {}
+export function POST(reg) {
+	return Response.json("OK");
+}
