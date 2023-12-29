@@ -6,7 +6,14 @@ function ReigisterPage() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	function handleFormSubmit() {}
+	function handleFormSubmit(event) {
+		event.preventDefault();
+		fetch("/api/register", {
+			method: "POST",
+			body: JSON.stringify({ email, password }),
+			headers: { "Content-Type": "application/json" },
+		});
+	}
 
 	return (
 		<section className="mt-10">
@@ -16,13 +23,13 @@ function ReigisterPage() {
 					type="email"
 					placeholder="email"
 					value={email}
-					onChange={(ev) => setEmail(ev.target.value)}
+					onChange={(event) => setEmail(event.target.value)}
 				/>
 				<input
 					type="password"
 					placeholder="password"
 					value={password}
-					onChange={(ev) => setPassword(ev.target.value)}
+					onChange={(event) => setPassword(event.target.value)}
 				/>
 				<button type="submit">Register</button>
 				<div className="my-4 text-center text-gray-600">
