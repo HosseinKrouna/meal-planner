@@ -3,8 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import Menu from "../icons/Menu";
+import { signOut, useSession } from "next-auth/react";
 
 function Header() {
+	const session = useSession();
+	console.log(session);
+	const status = session.status;
 	const [showMenu, setShowMenu] = useState(false);
 
 	const toggleMenu = () => {
@@ -56,14 +60,30 @@ function Header() {
 				<Link href={""}>About</Link>
 				<Link href={""}>Contact</Link>
 			</nav>
+
 			<nav className="flex items-center gap-4 text-gray-500 font-semibold">
-				<Link href={"/login"}>Login</Link>
-				<Link
-					href={"/register"}
-					className="bg-primary text-white rounded-full px-4 py-2"
-				>
-					Register
-				</Link>
+				{status === "unauthenticated" && (
+					<>
+						<Link href={"/login"}>Login</Link>
+						<Link
+							href={"/register"}
+							className="bg-primary text-white rounded-full px-4 py-2"
+						>
+							Register
+						</Link>
+					</>
+				)}
+
+				{status === "authenticated" && (
+					<>
+						<button
+							onClick={() => signOut()}
+							className="bg-primary text-white rounded-full px-8 py-2"
+						>
+							Logout
+						</button>
+					</>
+				)}
 			</nav>
 			<div className="items-center md:hidden">
 				<button onClick={toggleMenu} className="focus:outline-none">
