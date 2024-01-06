@@ -21,7 +21,7 @@ function Hero() {
 						Wähle jetzt
 						<Right />
 					</button>
-					<button className="flex items-center justify-center gap-2 px-4 py-2  text-gray-600 font-semibold">
+					<button className="flex border-0 items-center justify-center gap-2 px-4 py-2  text-gray-600 font-semibold">
 						Learn more
 						<Right />
 					</button>
