@@ -7,7 +7,6 @@ import { signOut, useSession } from "next-auth/react";
 
 function Header() {
 	const session = useSession();
-	console.log(session);
 	const status = session.status;
 	const [showMenu, setShowMenu] = useState(false);
 
