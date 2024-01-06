@@ -42,7 +42,8 @@ function LoginPage() {
 					oder ogin mit Google
 				</div>
 				<button
-					onClick={() => signIn("google")}
+					type="button"
+					onClick={() => signIn("google", { callbackUrl: "/" })}
 					className="flex gap-4 justify-center"
 				>
 					<Image

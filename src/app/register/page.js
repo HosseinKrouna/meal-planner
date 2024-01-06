@@ -1,4 +1,5 @@
 "use client";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -81,7 +82,10 @@ function ReigisterPage() {
 				<div className="my-4 text-center text-gray-600">
 					oder Log dich mit einem Provider an
 				</div>
-				<button className="flex gap-4 justify-center">
+				<button
+					onClick={() => signIn("google", { callbackUrl: "/" })}
+					className="flex gap-4 justify-center"
+				>
 					<Image
 						src={"/google-logo.png"}
 						width={25}
