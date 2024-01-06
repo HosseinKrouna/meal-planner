@@ -41,7 +41,10 @@ function LoginPage() {
 				<div className="my-4 text-center text-gray-500">
 					oder ogin mit Google
 				</div>
-				<button className="flex gap-4 justify-center">
+				<button
+					onClick={() => signIn("google")}
+					className="flex gap-4 justify-center"
+				>
 					<Image
 						src={"/google-logo.png"}
 						alt="Google Logo"
