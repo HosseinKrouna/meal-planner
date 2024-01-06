@@ -91,7 +91,7 @@ function ReigisterPage() {
 					Login mit Google
 				</button>
 				<div>
-					Kein Konto?{" "}
+					Du hast schin ein Konto?{" "}
 					<Link className="underline" href={"/login"}>
 						Login hier &raquo;
 					</Link>
