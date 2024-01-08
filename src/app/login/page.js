@@ -15,6 +15,10 @@ function LoginPage() {
 		setLoginInProgress(false);
 	}
 
+	async function handleSignInWithGoogle() {
+		await signIn("google", { callbackUrl: "/" });
+	}
+
 	return (
 		<section>
 			<h1 className="text-primary text-center text-4xl mb-4">Login</h1>
@@ -42,7 +46,8 @@ function LoginPage() {
 					oder ogin mit Google
 				</div>
 				<button
-					onClick={() => signIn("google")}
+					type="button"
+					onClick={handleSignInWithGoogle}
 					className="flex gap-4 justify-center"
 				>
 					<Image
