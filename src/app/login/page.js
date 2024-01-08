@@ -11,7 +11,7 @@ function LoginPage() {
 	async function handleFormSubmit(event) {
 		event.preventDefault();
 		setLoginInProgress(true);
-		await signIn("credentials", { email, password });
+		await signIn("credentials", { email, password, callbackUrl: "/" });
 		setLoginInProgress(false);
 	}
 
