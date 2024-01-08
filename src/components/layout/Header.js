@@ -7,7 +7,14 @@ import { signOut, useSession } from "next-auth/react";
 
 function Header() {
 	const session = useSession();
-	const status = session.status;
+	const status = session?.status;
+
+	const userData = session.data?.user;
+	let userName = userData?.name || userData?.email;
+	if (userName && userName.includes(" ")) {
+		userName = userName.split(" ")[0];
+	}
+
 	const [showMenu, setShowMenu] = useState(false);
 
 	const toggleMenu = () => {
@@ -75,6 +82,9 @@ function Header() {
 
 				{status === "authenticated" && (
 					<>
+						<Link href={"/profile"} className="whitespace-nowrap">
+							Hallo, {userName}
+						</Link>
 						<button
 							onClick={() => signOut()}
 							className="bg-primary text-white rounded-full px-8 py-2"
