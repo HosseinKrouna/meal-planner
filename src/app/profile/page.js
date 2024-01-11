@@ -12,6 +12,7 @@ function ProfilePage() {
 
 	const [saved, setSaved] = useState(false);
 	const [isSaving, setIsSaving] = useState(false);
+	const [isUploading, setIsUploading] = useState(false);
 
 	const [image, setImage] = useState("");
 
@@ -42,8 +43,9 @@ function ProfilePage() {
 		if (files?.length === 1) {
 			const data = new FormData();
 			data.append("file", files[0]);
-
 			try {
+				setIsUploading(true);
+
 				const response = await fetch("/api/upload", {
 					method: "POST",
 					body: data,
@@ -51,6 +53,7 @@ function ProfilePage() {
 
 				const link = await response.json();
 				setImage(link);
+				setIsUploading(false);
 
 				if (response.ok) {
 					return response;
@@ -80,10 +83,14 @@ function ProfilePage() {
 				)}
 				{isSaving && (
 					<h2 className="text-center bg-blue-100 p-4 rounded-lg border border-blue-300">
-						...wird aktualisiert!
+						...wird aktualisiert...
 					</h2>
 				)}
-
+				{isUploading && (
+					<h2 className="text-center bg-blue-100 p-4 rounded-lg border border-blue-300">
+						Uploading...
+					</h2>
+				)}
 				<div className="flex gap-4 items-center">
 					<div>
 						<div className="p-2 rounded-lg relative max-w-[120px]">
