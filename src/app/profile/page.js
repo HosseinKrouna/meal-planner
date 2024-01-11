@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 function ProfilePage() {
 	const session = useSession();
+	console.log(session);
 	const [userName, setUserName] = useState(session?.data?.user?.name || "");
 	const { status } = session;
 
@@ -28,7 +29,7 @@ function ProfilePage() {
 		const response = await fetch("/api/profile", {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ name: userName }),
+			body: JSON.stringify({ name: userName, image }),
 		});
 		setIsSaving(false);
 		if (response.ok) {
