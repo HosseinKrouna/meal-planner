@@ -3,6 +3,9 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import InfoBox from "../../components/layout/InfoBox";
+import SuccessBox from "../../components/layout/SuccessBox";
+import toast from "react-hot-toast";
 
 function ProfilePage() {
 	const session = useSession();
@@ -25,17 +28,21 @@ function ProfilePage() {
 
 	async function handleProfileInfoUpdate(event) {
 		event.preventDefault();
-		setSaved(false);
-		setIsSaving(true);
-		const response = await fetch("/api/profile", {
-			method: "PUT",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ name: userName, image }),
+		const savingPromise = new Promise(async (resolve, reject) => {
+			const response = await fetch("/api/profile", {
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ name: userName, image }),
+			});
+			if (response.ok) resolve();
+			else reject();
 		});
-		setIsSaving(false);
-		if (response.ok) {
-			setSaved(true);
-		}
+
+		await toast.promise(savingPromise, {
+			loading: "Saving...",
+			success: "Profile saved!",
+			error: "Error",
+		});
 	}
 
 	async function handleFileChange(event) {
@@ -43,24 +50,26 @@ function ProfilePage() {
 		if (files?.length === 1) {
 			const data = new FormData();
 			data.append("file", files[0]);
-			try {
-				setIsUploading(true);
 
+			const uploadPromise = new Promise(async (resolve, reject) => {
 				const response = await fetch("/api/upload", {
 					method: "POST",
 					body: data,
 				});
-
-				const link = await response.json();
-				setImage(link);
-				setIsUploading(false);
-
 				if (response.ok) {
-					return response;
+					const link = await response.json();
+					setImage(link);
+					resolve();
+				} else {
+					reject();
 				}
-			} catch (error) {
-				throw new Error("Something went wrong");
-			}
+			});
+
+			await toast.promise(uploadPromise, {
+				loading: "Uploading...",
+				success: "Upload erfolgreich!",
+				error: "Upload error!",
+			});
 		}
 	}
 
@@ -76,21 +85,8 @@ function ProfilePage() {
 		<section className="mt-8">
 			<h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
 			<div className="max-w-md mx-auto">
-				{saved && (
-					<h2 className="text-center bg-green-100 p-4 rounded-lg border border-green-300">
-						Profile aktualisiert!
-					</h2>
-				)}
-				{isSaving && (
-					<h2 className="text-center bg-blue-100 p-4 rounded-lg border border-blue-300">
-						...wird aktualisiert...
-					</h2>
-				)}
-				{isUploading && (
-					<h2 className="text-center bg-blue-100 p-4 rounded-lg border border-blue-300">
-						Uploading...
-					</h2>
-				)}
+				{saved && <SuccessBox>Profile aktualisiert!</SuccessBox>}
+				{isSaving && <InfoBox>...wird akzualisiert...</InfoBox>}
 				<div className="flex gap-4 items-center">
 					<div>
 						<div className="p-2 rounded-lg relative max-w-[120px]">
