@@ -9,13 +9,14 @@ import toast from "react-hot-toast";
 
 function ProfilePage() {
 	const session = useSession();
-	console.log(session);
-	const [userName, setUserName] = useState(session?.data?.user?.name || "");
 	const { status } = session;
-
-	const [saved, setSaved] = useState(false);
-	const [isSaving, setIsSaving] = useState(false);
-	const [isUploading, setIsUploading] = useState(false);
+	console.log({ session });
+	const [userName, setUserName] = useState(session?.data?.user?.name || "");
+	const [phonenummber, setPhonenumber] = useState("");
+	const [streetAddress, setStreetAddress] = useState("");
+	const [postalCode, setPostalCode] = useState("");
+	const [country, setCountry] = useState("");
+	const [city, setCity] = useState("");
 
 	const [image, setImage] = useState("");
 
@@ -23,6 +24,15 @@ function ProfilePage() {
 		if (status === "authenticated") {
 			setUserName(session.data.user.name);
 			setImage(session.data.user.image);
+			fetch("/api/profile").then((response) => {
+				response.json().then((data) => {
+					setPhonenumber(data.phonenummber);
+					setStreetAddress(data.streetAddress);
+					setPostalCode(data.postalCode);
+					setCountry(data.country);
+					setCity(data.city);
+				});
+			});
 		}
 	}, [session, status]);
 
@@ -32,7 +42,15 @@ function ProfilePage() {
 			const response = await fetch("/api/profile", {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ name: userName, image }),
+				body: JSON.stringify({
+					name: userName,
+					image,
+					phonenummber,
+					streetAddress,
+					postalCode,
+					city,
+					country,
+				}),
 			});
 			if (response.ok) resolve();
 			else reject();
@@ -85,9 +103,7 @@ function ProfilePage() {
 		<section className="mt-8">
 			<h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
 			<div className="max-w-md mx-auto">
-				{saved && <SuccessBox>Profile aktualisiert!</SuccessBox>}
-				{isSaving && <InfoBox>...wird akzualisiert...</InfoBox>}
-				<div className="flex gap-4 items-center">
+				<div className="flex gap-4">
 					<div>
 						<div className="p-2 rounded-lg relative max-w-[120px]">
 							{image && (
@@ -113,21 +129,74 @@ function ProfilePage() {
 							</label>
 						</div>
 					</div>
-					<form
-						className="grow max-w-md mx-auto"
-						onSubmit={handleProfileInfoUpdate}
-					>
+					<form className="grow" onSubmit={handleProfileInfoUpdate}>
+						<label>Benutzername</label>
 						<input
+							style={{ "margin-top": "0" }}
 							value={userName}
 							onChange={(event) => setUserName(event.target.value)}
 							type="text"
 							placeholder="Vor- und Nachname"
 						/>
+						<label>Email</label>
 						<input
+							style={{ "margin-top": "0" }}
 							type="email"
 							value={session.data.user.email}
 							disabled={true}
 						/>
+						<label>Telefonnummer</label>
+
+						<input
+							style={{ "margin-top": "0" }}
+							type="tel"
+							value={phonenummber}
+							onChange={(event) => setPhonenumber(event.target.value)}
+							placeholder="Telefonnummer"
+						/>
+
+						<label>Straße und Hausnummer</label>
+
+						<input
+							style={{ "margin-top": "0" }}
+							type="text"
+							value={streetAddress}
+							onChange={(event) => setStreetAddress(event.target.value)}
+							placeholder="Straße + Hausnummer"
+						/>
+						<div className="flex gap-2">
+							<div>
+								<label>Postleitzahl</label>
+								<input
+									style={{ "margin-top": "0" }}
+									type="text"
+									value={postalCode}
+									onChange={(event) => setPostalCode(event.target.value)}
+									placeholder="Postleitzahl"
+								/>
+							</div>
+							<div>
+								<label>Stadt</label>
+								<input
+									style={{ "margin-top": "0" }}
+									type="text"
+									value={city}
+									onChange={(event) => setCity(event.target.value)}
+									placeholder="Stadt"
+								/>
+							</div>
+						</div>
+
+						<label>Land</label>
+
+						<input
+							style={{ "margin-top": "0" }}
+							type="text"
+							value={country}
+							onChange={(event) => setCountry(event.target.value)}
+							placeholder="Land"
+						/>
+
 						<button type="submit">Save</button>
 					</form>
 				</div>

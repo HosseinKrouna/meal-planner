@@ -14,6 +14,11 @@ const UserSchema = new Schema(
 				}
 			},
 		},
+		phonenummber: { type: String },
+		streetAddress: { type: String },
+		postalCode: { type: String },
+		city: { type: String },
+		country: { type: String },
 		image: { type: String },
 	},
 	{ timestamps: true }
