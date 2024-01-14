@@ -6,19 +6,18 @@ function EditableImage({ link, setLink }) {
 		const files = event.target.files;
 		if (files?.length === 1) {
 			const data = new FormData();
-			data.append("file", files[0]);
+			data.set("file", files[0]);
 
-			const uploadPromise = new Promise(async (resolve, reject) => {
-				const response = await fetch("/api/upload", {
-					method: "POST",
-					body: data,
-				});
+			const uploadPromise = fetch("/api/upload", {
+				method: "POST",
+				body: data,
+			}).then(async (response) => {
 				if (response.ok) {
 					const link = await response.json();
 					setLink(link);
-					resolve();
 				} else {
-					reject();
+					const errorText = await response.text();
+					throw new Error(`Something went wrong: ${errorText}`);
 				}
 			});
 
