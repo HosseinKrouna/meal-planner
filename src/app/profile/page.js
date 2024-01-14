@@ -19,6 +19,7 @@ function ProfilePage() {
 	const [city, setCity] = useState("");
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [image, setImage] = useState("");
+	const [profileFeched, setProfileFeched] = useState(false);
 
 	useEffect(() => {
 		if (status === "authenticated") {
@@ -32,6 +33,7 @@ function ProfilePage() {
 					setCountry(data.country);
 					setCity(data.city);
 					setIsAdmin(data.admin);
+					setProfileFeched(true);
 				});
 			});
 		}
@@ -92,7 +94,7 @@ function ProfilePage() {
 		}
 	}
 
-	if (status === "loading") {
+	if (status === "loading" || !profileFeched) {
 		return "Loading...";
 	}
 
@@ -133,7 +135,7 @@ function ProfilePage() {
 					<form className="grow" onSubmit={handleProfileInfoUpdate}>
 						<label>Benutzername</label>
 						<input
-							style={{ "margin-top": "0" }}
+							style={{ marginTop: "0" }}
 							value={userName}
 							onChange={(event) => setUserName(event.target.value)}
 							type="text"
@@ -141,7 +143,7 @@ function ProfilePage() {
 						/>
 						<label>Email</label>
 						<input
-							style={{ "margin-top": "0" }}
+							style={{ marginTop: "0" }}
 							type="email"
 							value={session.data.user.email}
 							disabled={true}
@@ -149,7 +151,7 @@ function ProfilePage() {
 						<label>Telefonnummer</label>
 
 						<input
-							style={{ "margin-top": "0" }}
+							style={{ marginTop: "0" }}
 							type="tel"
 							value={phonenummber}
 							onChange={(event) => setPhonenumber(event.target.value)}
@@ -159,7 +161,7 @@ function ProfilePage() {
 						<label>Straße und Hausnummer</label>
 
 						<input
-							style={{ "margin-top": "0" }}
+							style={{ marginTop: "0" }}
 							type="text"
 							value={streetAddress}
 							onChange={(event) => setStreetAddress(event.target.value)}
@@ -169,7 +171,7 @@ function ProfilePage() {
 							<div>
 								<label>Postleitzahl</label>
 								<input
-									style={{ "margin-top": "0" }}
+									style={{ marginTop: "0" }}
 									type="text"
 									value={postalCode}
 									onChange={(event) => setPostalCode(event.target.value)}
@@ -179,7 +181,7 @@ function ProfilePage() {
 							<div>
 								<label>Stadt</label>
 								<input
-									style={{ "margin-top": "0" }}
+									style={{ marginTop: "0" }}
 									type="text"
 									value={city}
 									onChange={(event) => setCity(event.target.value)}
@@ -191,7 +193,7 @@ function ProfilePage() {
 						<label>Land</label>
 
 						<input
-							style={{ "margin-top": "0" }}
+							style={{ marginTop: "0" }}
 							type="text"
 							value={country}
 							onChange={(event) => setCountry(event.target.value)}
