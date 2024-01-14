@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { User } from "@/app/models/User";
+import { User } from "@/models/User";
 
 export async function PUT(req) {
 	mongoose.connect(process.env.MONGO_URL);
