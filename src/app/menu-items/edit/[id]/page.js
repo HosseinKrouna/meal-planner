@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useProfile } from "@/components/useProfile";
 import toast from "react-hot-toast";
 import { redirect, useParams } from "next/navigation";
-import EditableImage from "@/components/layout/EditableImage";
 import UserTabs from "@/components/layout/UserTabs";
 import MenuItemForm from "@/components/layout/MenuItemForm";
 
