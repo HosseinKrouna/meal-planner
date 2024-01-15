@@ -8,7 +8,17 @@ function MenuItemForm({ onSubmit, menuItem }) {
 	const [name, setName] = useState(menuItem?.name || "");
 
 	return (
-		<form onSubmit={onSubmit} className=" max-w-2xl mx-auto mt-8">
+		<form
+			onSubmit={(event) =>
+				onSubmit(event, {
+					image,
+					name,
+					description,
+					ingredients,
+				})
+			}
+			className=" max-w-2xl mx-auto mt-8"
+		>
 			<div
 				className="grid items-start gap-4"
 				style={{ gridTemplateColumns: ".3fr .7fr" }}

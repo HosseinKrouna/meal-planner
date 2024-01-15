@@ -26,9 +26,9 @@ function EditMenuItemPage() {
 		});
 	}, [id]);
 
-	async function handleFormSubmit(event) {
+	async function handleFormSubmit(event, data) {
 		event.preventDefault();
-		const data = { image, description, ingredients, name, _id: id };
+		data = { ...data, _id: id };
 		const savingPromise = new Promise(async (resolve, reject) => {
 			const response = await fetch("/api/menu-items", {
 				method: "PUT",
@@ -73,7 +73,7 @@ function EditMenuItemPage() {
 					<span>Alle Rezepte anzeigen</span>
 				</Link>
 			</div>
-			<MenuItemForm menuItem={menuItem} />
+			<MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} />
 		</section>
 	);
 }
