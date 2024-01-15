@@ -8,26 +8,20 @@ import toast from "react-hot-toast";
 import { redirect, useParams } from "next/navigation";
 import EditableImage from "@/components/layout/EditableImage";
 import UserTabs from "@/components/layout/UserTabs";
+import MenuItemForm from "@/components/layout/MenuItemForm";
 
 function EditMenuItemPage() {
 	const { id } = useParams();
 	const { loading, data } = useProfile();
 
+	const [menuItem, setMenuItem] = useState(null);
 	const [redirectToItems, setRedirectToItems] = useState(false);
-
-	const [image, setImage] = useState("");
-	const [description, setDescreption] = useState("");
-	const [ingredients, setIngredients] = useState("");
-	const [name, setName] = useState("");
 
 	useEffect(() => {
 		fetch("/api/menu-items").then((res) => {
 			res.json().then((items) => {
 				const item = items.find((i) => i._id === id);
-				setImage(item.image);
-				setDescreption(item.description);
-				setIngredients(item.ingredients);
-				setName(item.name);
+				setMenuItem(item);
 			});
 		});
 	}, [id]);
@@ -79,39 +73,7 @@ function EditMenuItemPage() {
 					<span>Alle Rezepte anzeigen</span>
 				</Link>
 			</div>
-			<form onSubmit={handleFormSubmit} className=" max-w-2xl mx-auto mt-8">
-				<div
-					className="grid items-start gap-4"
-					style={{ gridTemplateColumns: ".3fr .7fr" }}
-				>
-					<div>
-						<EditableImage link={image} setLink={setImage} />
-					</div>
-					<div className="grow">
-						<label>Rezeptname</label>
-						<input
-							type="text"
-							value={name}
-							onChange={(event) => setName(event.target.value)}
-						/>
-						<label>Beschreibung</label>
-						<input
-							type="text"
-							value={description}
-							onChange={(event) => setDescreption(event.target.value)}
-						/>
-						<label>Zutaten</label>
-						<input
-							type="text"
-							value={ingredients}
-							onChange={(event) => setIngredients(event.target.value)}
-						/>
-						<button type="submit" className="mb-2">
-							Erstellen
-						</button>
-					</div>
-				</div>
-			</form>
+			<MenuItemForm menuItem={menuItem} />
 		</section>
 	);
 }
