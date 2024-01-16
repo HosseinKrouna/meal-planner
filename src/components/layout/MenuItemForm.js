@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditableImage from "@/components/layout/EditableImage";
 import MenuItemPriceProps from "@/components/layout/MenuItemPriceProps";
 
@@ -11,6 +11,16 @@ function MenuItemForm({ onSubmit, menuItem }) {
 	const [extraIngredientPrices, setExtraIngredientPrices] = useState(
 		menuItem?.extraIngredientPrices || []
 	);
+	const [category, setCategory] = useState(menuItem?.category || "");
+	const [categories, setCategories] = useState([]);
+
+	useEffect(() => {
+		fetch("/api/categories").then((res) => {
+			res.json().then((categories) => {
+				setCategories(categories);
+			});
+		});
+	}, []);
 
 	return (
 		<form
@@ -22,6 +32,7 @@ function MenuItemForm({ onSubmit, menuItem }) {
 					description,
 					basePrice,
 					extraIngredientPrices,
+					category,
 				})
 			}
 			className=" max-w-2xl mx-auto mt-8"
@@ -46,6 +57,18 @@ function MenuItemForm({ onSubmit, menuItem }) {
 						value={description}
 						onChange={(event) => setDescreption(event.target.value)}
 					/>
+					<label>Kategorie</label>
+					<select
+						value={category}
+						onChange={(event) => setCategory(event.target.value)}
+					>
+						{categories?.length > 0 &&
+							categories.map((categoryFromMap) => (
+								<option key={categoryFromMap._id} value={categoryFromMap._id}>
+									{categoryFromMap.name}
+								</option>
+							))}
+					</select>
 					<label>Basis Preis</label>
 					<input
 						type="text"
