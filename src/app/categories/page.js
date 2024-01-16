@@ -64,6 +64,25 @@ function CategoriesPage() {
 		return "Kein Admin";
 	}
 
+	async function handleDeleteClick(_id) {
+		const promise = new Promise(async (resolve, reject) => {
+			const response = await fetch("/api/categories?_id=" + _id, {
+				method: "DELETE",
+			});
+			if (response.ok) {
+				resolve();
+			} else {
+				reject();
+			}
+		});
+		await toast.promise(promise, {
+			loading: "Deleting...",
+			success: "Deleted",
+			error: "Error",
+		});
+		fetchCategories();
+	}
+
 	return (
 		<section className="mt-8 max-w-md mx-auto">
 			<UserTabs isAdmin={true} />
@@ -94,19 +113,35 @@ function CategoriesPage() {
 				</div>
 			</form>
 			<div>
-				<h2 className="text-sm mt-8 text-gray-500">Kategorie bearbeiten:</h2>
+				<h2 className="text-sm mt-8 text-gray-500">Vorhandene Kategorie:</h2>
 				{categories?.length > 0 &&
 					categories.map((category) => (
-						<button
-							key={category.id}
-							onClick={() => {
-								setEditedCategory(category);
-								setCategoryName(category.name);
-							}}
-							className=" bg-gray-200 rounded-xl p-2 px -4 flex gap-1 cursor-pointer mb-1"
+						<div
+							key={category._id}
+							className="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center"
 						>
-							<span key={category.id}>{category.name}</span>
-						</button>
+							<div className="grow">{category.name}</div>
+							<div className="flex gap-1">
+								<button
+									type="button"
+									onClick={() => {
+										setEditedCategory(category);
+										setCategoryName(category.name);
+									}}
+								>
+									Bearbeiten
+								</button>
+								<button
+									type="button"
+									onClick={() => handleDeleteClick(category._id)}
+								>
+									LÖSCHEN
+								</button>
+								{/* <DeleteButton
+                label="Delete"
+                onDelete={() => handleDeleteClick(c._id)} /> */}
+							</div>
+						</div>
 					))}
 			</div>
 		</section>
