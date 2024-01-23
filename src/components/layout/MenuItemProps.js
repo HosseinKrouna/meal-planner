@@ -1,24 +1,31 @@
+"use client";
+
 import Trash from "@/components/icons/Trash";
 import Plus from "@/components/icons/Plus";
 import ChevronUp from "@/components/icons/ChevronUp";
 import ChevronDown from "@/components/icons/ChevronDown";
 import { useState } from "react";
 
-function MenuItemPriceProps({ name, props, setProps, addLabel }) {
+function MenuItemProps({ name, props, setProps, addLabel }) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	function addProp() {
 		setProps((oldProps) => {
-			return [...oldProps, { name: "", prices: 0 }];
+			// Falls oldProps undefined ist, starte mit einem leeren Array
+			const existingProps = oldProps || [];
+			return [...existingProps, { name: "" }];
 		});
 	}
 
-	function editProp(event, index, prop) {
-		const newValue = event.target.value;
-		setProps((prevSizes) => {
-			const newSizes = [...prevSizes];
-			newSizes[index][prop] = newValue;
-			return newSizes;
+	function editProp(ev, index, prop) {
+		const newValue = ev.target.value;
+		console.log("Neuer Wert:", newValue);
+
+		setProps((prevProps) => {
+			const newProps = [...prevProps];
+			newProps[index] = +newValue;
+			console.log("Neue Props:", newProps);
+			return newProps;
 		});
 	}
 
@@ -40,24 +47,15 @@ function MenuItemPriceProps({ name, props, setProps, addLabel }) {
 			</button>
 			<div className={isOpen ? "block" : "hidden"}>
 				{props?.length > 0 &&
-					props.map((size, index) => (
+					props.map((peopleNumber, index) => (
 						<div key={index} className="flex items-end gap-2">
 							<div>
 								<label>Name</label>
 								<input
 									type="text"
-									placeholder="Size name"
-									value={size.name}
+									placeholder="Anzahl der Personen"
+									value={peopleNumber.name}
 									onChange={(ev) => editProp(ev, index, "name")}
-								/>
-							</div>
-							<div>
-								<label>Extra price</label>
-								<input
-									type="text"
-									placeholder="Extra price"
-									value={size.price}
-									onChange={(ev) => editProp(ev, index, "price")}
 								/>
 							</div>
 							<div>
@@ -84,4 +82,4 @@ function MenuItemPriceProps({ name, props, setProps, addLabel }) {
 	);
 }
 
-export default MenuItemPriceProps;
+export default MenuItemProps;
