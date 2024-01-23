@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import EditableImage from "@/components/layout/EditableImage";
-import MenuItemPriceProps from "@/components/layout/MenuItemPriceProps";
+import MenuItemProps from "@/components/layout/MenuItemProps";
 
 function MenuItemForm({ onSubmit, menuItem }) {
 	const [image, setImage] = useState(menuItem?.image || "");
-	const [description, setDescreption] = useState(menuItem?.description || "");
-	const [basePrice, setBasePrice] = useState(menuItem?.basePrice || "");
+	const [description, setDescription] = useState(menuItem?.description || "");
 	const [name, setName] = useState(menuItem?.name || "");
-	const [sizes, setSizes] = useState(menuItem?.sizes || []);
-	const [extraIngredientPrices, setExtraIngredientPrices] = useState(
-		menuItem?.extraIngredientPrices || []
+	const [numberOfPeople, setNumberOfPeople] = useState(
+		menuItem?.numberOfPeople || 0
 	);
 	const [category, setCategory] = useState(menuItem?.category || "");
 	const [categories, setCategories] = useState([]);
@@ -22,16 +20,18 @@ function MenuItemForm({ onSubmit, menuItem }) {
 		});
 	}, []);
 
+	useEffect(() => {
+		console.log("numberOfPeople updated:", numberOfPeople);
+	}, [numberOfPeople]);
+
 	return (
 		<form
 			onSubmit={(event) =>
 				onSubmit(event, {
-					sizes,
+					numberOfPeople,
 					image,
 					name,
 					description,
-					basePrice,
-					extraIngredientPrices,
 					category,
 				})
 			}
@@ -55,13 +55,14 @@ function MenuItemForm({ onSubmit, menuItem }) {
 					<input
 						type="text"
 						value={description}
-						onChange={(event) => setDescreption(event.target.value)}
+						onChange={(event) => setDescription(event.target.value)}
 					/>
 					<label>Kategorie</label>
 					<select
 						value={category}
 						onChange={(event) => setCategory(event.target.value)}
 					>
+						<option value="">Bitte wähle eine Kategorie aus</option>
 						{categories?.length > 0 &&
 							categories.map((categoryFromMap) => (
 								<option key={categoryFromMap._id} value={categoryFromMap._id}>
@@ -69,26 +70,25 @@ function MenuItemForm({ onSubmit, menuItem }) {
 								</option>
 							))}
 					</select>
-					<label>Basis Preis</label>
+
+					<label>Anzahl der Personen</label>
 					<input
-						type="text"
-						value={basePrice}
-						onChange={(event) => setBasePrice(event.target.value)}
+						type="number"
+						value={numberOfPeople}
+						onChange={(event) => setNumberOfPeople(event.target.value)}
+						className="border w-20 border-gray-300 rounded-md p-2 focus:outline-none mx-1 my-4 focus:border-blue-500"
+						onFocus={(event) => event.target.select()}
 					/>
-					<MenuItemPriceProps
-						name={"Sizes"}
-						addLabel={"Füge Item Größe hinzu"}
-						props={sizes}
-						setProps={setSizes}
-					/>
-					<MenuItemPriceProps
-						name={"Extra ingredients"}
-						addLabel={"Füge Zutaten hinzu"}
-						props={extraIngredientPrices}
-						setProps={setExtraIngredientPrices}
-					/>
+
+					{/* <MenuItemProps
+						name={"Anzahl Personen"}
+						addLabel={"Füge Personenanzahl hinzu"}
+						props={numberOfPeople}
+						setProps={setNumberOfPeople}
+					/> */}
+
 					<button type="submit" className="mb-2">
-						Save
+						Speichern
 					</button>
 				</div>
 			</div>
