@@ -87,8 +87,10 @@ function CategoriesPage() {
 		<section className="mt-8 max-w-md mx-auto">
 			<UserTabs isAdmin={true} />
 			<form className="mt-8" onSubmit={handleCategorySubmit}>
-				<div className="flex gap-2 items-end">
-					<div className="grow">
+				<div className="flex flex-col gap-2 items-end">
+					{" "}
+					{/* Änderung der Flexbox-Ausrichtung auf Spaltenrichtung für kleinere Bildschirme */}
+					<div className="w-full">
 						<label>
 							{editedCategory
 								? "Kategorie aktualisieren"
@@ -118,9 +120,10 @@ function CategoriesPage() {
 					categories.map((category) => (
 						<div
 							key={category._id}
-							className="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center"
+							className="bg-gray-100 rounded-xl p-2 px-4 flex flex-col md:flex-row gap-1 mb-1 items-center"
 						>
-							<div className="grow">{category.name}</div>
+							<div className="grow md:w-1/2">{category.name}</div>{" "}
+							{/* Anpassung der Breite auf größeren Bildschirmen */}
 							<div className="flex gap-1">
 								<button
 									type="button"
@@ -133,13 +136,11 @@ function CategoriesPage() {
 								</button>
 								<button
 									type="button"
+									className="text-red-600 hover:text-red-800 focus:outline-none"
 									onClick={() => handleDeleteClick(category._id)}
 								>
 									LÖSCHEN
 								</button>
-								{/* <DeleteButton
-                label="Delete"
-                onDelete={() => handleDeleteClick(c._id)} /> */}
 							</div>
 						</div>
 					))}
