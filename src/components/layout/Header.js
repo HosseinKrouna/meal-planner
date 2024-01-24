@@ -1,10 +1,10 @@
 "use client";
-import { CartContext } from "@/components/AppContext";
+// import { CartContext } from "@/components/AppContext";
 import Bars2 from "@/components/icons/Bars2";
 import BookOpen from "@/components/icons/BookOpen";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 function AuthLinks({ status, userName }) {
 	if (status === "authenticated") {

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Right from "@/components/icons/Right";
 import { useEffect, useState } from "react";
-import { useProfile } from "@/components/useProfile";
+import { useProfile } from "@/components/UseProfile";
 import toast from "react-hot-toast";
 import { redirect, useParams } from "next/navigation";
 import UserTabs from "@/components/layout/UserTabs";
