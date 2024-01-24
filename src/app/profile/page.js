@@ -1,58 +1,40 @@
 "use client";
+import EditableImage from "@/components/layout/EditableImage";
+import UserForm from "@/components/layout/UserForm";
+import UserTabs from "@/components/layout/UserTabs";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import UserTabs from "@/components/layout/UserTabs";
-import EditableImage from "@/components/layout/EditableImage";
 
-function ProfilePage() {
+export default function ProfilePage() {
 	const session = useSession();
-	const { status } = session;
-	console.log({ session });
-	const [userName, setUserName] = useState(session?.data?.user?.name || "");
-	const [phoneNumber, setPhoneNumber] = useState("");
-	const [streetAddress, setStreetAddress] = useState("");
-	const [postalCode, setPostalCode] = useState("");
-	const [country, setCountry] = useState("");
-	const [city, setCity] = useState("");
+
+	const [user, setUser] = useState(null);
 	const [isAdmin, setIsAdmin] = useState(false);
-	const [image, setImage] = useState("");
-	const [profileFeched, setProfileFeched] = useState(false);
+	const [profileFetched, setProfileFetched] = useState(false);
+	const { status } = session;
 
 	useEffect(() => {
 		if (status === "authenticated") {
-			setUserName(session.data.user.name);
-			setImage(session.data.user.image);
 			fetch("/api/profile").then((response) => {
 				response.json().then((data) => {
-					setPhoneNumber(data.phoneNumber);
-					setStreetAddress(data.streetAddress);
-					setPostalCode(data.postalCode);
-					setCountry(data.country);
-					setCity(data.city);
+					setUser(data);
 					setIsAdmin(data.admin);
-					setProfileFeched(true);
+					setProfileFetched(true);
 				});
 			});
 		}
 	}, [session, status]);
 
-	async function handleProfileInfoUpdate(event) {
-		event.preventDefault();
+	async function handleProfileInfoUpdate(ev, data) {
+		ev.preventDefault();
+
 		const savingPromise = new Promise(async (resolve, reject) => {
 			const response = await fetch("/api/profile", {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					name: userName,
-					image,
-					phoneNumber,
-					streetAddress,
-					postalCode,
-					city,
-					country,
-				}),
+				body: JSON.stringify(data),
 			});
 			if (response.ok) resolve();
 			else reject();
@@ -65,7 +47,7 @@ function ProfilePage() {
 		});
 	}
 
-	if (status === "loading" || !profileFeched) {
+	if (status === "loading" || !profileFetched) {
 		return "Loading...";
 	}
 
@@ -76,87 +58,9 @@ function ProfilePage() {
 	return (
 		<section className="mt-8">
 			<UserTabs isAdmin={isAdmin} />
-			<div className="max-w-md mx-auto mt-8">
-				<div className="flex gap-4">
-					<div>
-						<div className="p-2 rounded-lg relative max-w-[120px]">
-							<EditableImage link={image} setLink={setImage} />
-						</div>
-					</div>
-					<form className="grow" onSubmit={handleProfileInfoUpdate}>
-						<label>Benutzername</label>
-						<input
-							style={{ marginTop: "0" }}
-							value={userName}
-							onChange={(event) => setUserName(event.target.value)}
-							type="text"
-							placeholder="Vor- und Nachname"
-						/>
-						<label>Email</label>
-						<input
-							style={{ marginTop: "0" }}
-							type="email"
-							value={session.data.user.email}
-							disabled={true}
-						/>
-						<label>Telefonnummer</label>
-
-						<input
-							style={{ marginTop: "0" }}
-							type="tel"
-							value={phoneNumber}
-							onChange={(event) => setPhoneNumber(event.target.value)}
-							placeholder="Telefonnummer"
-						/>
-
-						<label>Straße und Hausnummer</label>
-
-						<input
-							style={{ marginTop: "0" }}
-							type="text"
-							value={streetAddress}
-							onChange={(event) => setStreetAddress(event.target.value)}
-							placeholder="Straße + Hausnummer"
-						/>
-						<div className="flex gap-2">
-							<div>
-								<label>Postleitzahl</label>
-								<input
-									style={{ marginTop: "0" }}
-									type="text"
-									value={postalCode}
-									onChange={(event) => setPostalCode(event.target.value)}
-									placeholder="Postleitzahl"
-								/>
-							</div>
-							<div>
-								<label>Stadt</label>
-								<input
-									style={{ marginTop: "0" }}
-									type="text"
-									value={city}
-									onChange={(event) => setCity(event.target.value)}
-									placeholder="Stadt"
-								/>
-							</div>
-						</div>
-
-						<label>Land</label>
-
-						<input
-							style={{ marginTop: "0" }}
-							type="text"
-							value={country}
-							onChange={(event) => setCountry(event.target.value)}
-							placeholder="Land"
-						/>
-
-						<button type="submit">Save</button>
-					</form>
-				</div>
+			<div className="max-w-2xl mx-auto mt-8">
+				<UserForm user={user} onSave={handleProfileInfoUpdate} />
 			</div>
 		</section>
 	);
 }
-
-export default ProfilePage;

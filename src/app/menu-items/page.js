@@ -1,5 +1,5 @@
 "use client";
-import { useProfile } from "@/components/useProfile";
+import { useProfile } from "@/components/UseProfile";
 import UserTabs from "@/components/layout/UserTabs";
 import Right from "@/components/icons/Right";
 import Link from "next/link";
