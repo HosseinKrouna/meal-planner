@@ -1,8 +1,9 @@
 import mongoose, { model, models, Schema } from "mongoose";
 
-const ExtraPriceSchema = new Schema({
+const IngredientsSchema = new Schema({
 	name: String,
-	price: Number,
+	quantity: Number,
+	unit: String,
 });
 
 const MenuItemSchema = new Schema(
@@ -11,9 +12,8 @@ const MenuItemSchema = new Schema(
 		name: { type: String },
 		description: { type: String },
 		category: { type: mongoose.Types.ObjectId },
-		basePrice: { type: Number },
-		sizes: { type: [ExtraPriceSchema] },
-		extraIngredientPrices: { type: [ExtraPriceSchema] },
+		numberOfPeople: { type: Number },
+		ingredients: { type: [IngredientsSchema] },
 	},
 	{ timestamps: true }
 );
