@@ -28,6 +28,7 @@ function EditMenuItemPage() {
 
 	async function handleFormSubmit(event, data) {
 		event.preventDefault();
+		console.log(data);
 		data = { ...data, _id: id };
 		const savingPromise = new Promise(async (resolve, reject) => {
 			const response = await fetch("/api/menu-items", {
@@ -92,10 +93,10 @@ function EditMenuItemPage() {
 				</Link>
 			</div>
 			<MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} />
-			<div className="max-w-md mx-auto mt-2">
-				<div className="max-w-xs ml-auto pl-4">
+			<div className="max-w-md mx-auto mt-2 flex justify-center">
+				<div className="max-w-xs">
 					<DeleteButton
-						label="Delete this menu item"
+						label="Dieses Rezept Löschen"
 						onDelete={handleDeleteClick}
 					/>
 				</div>

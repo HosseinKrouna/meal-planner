@@ -36,16 +36,18 @@ function MenuItemsPage() {
 				</Link>
 			</div>
 			<div>
-				<h2 className="text-sm text-gray-500 mt-8">Edit menu item:</h2>
+				<h2 className="text-sm text-gray-500 mt-8">Rezepte Sammlung:</h2>
+
 				<div className="grid grid-cols-3 gap-2">
 					{menuItems?.length > 0 &&
 						menuItems.map((item) => (
 							<Link
 								key={item._id}
 								href={"/menu-items/edit/" + item._id}
-								className="bg-gray-200 rounded-lg p-4"
+								className="bg-gray-200 rounded-lg p-4 flex flex-col items-center"
+								style={{ maxWidth: "200px", padding: "10px" }}
 							>
-								<div className="relative">
+								<div className="relative mb-2">
 									<Image
 										className="rounded-md"
 										src={item.image}
@@ -54,7 +56,12 @@ function MenuItemsPage() {
 										height={200}
 									/>
 								</div>
-								<div className="text-center">{item.name}</div>
+								<div
+									style={{ fontSize: 11 }}
+									className="text-center font-bold mt-2 mx-4"
+								>
+									{item.name}
+								</div>
 							</Link>
 						))}
 				</div>

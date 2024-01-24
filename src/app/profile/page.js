@@ -11,7 +11,7 @@ function ProfilePage() {
 	const { status } = session;
 	console.log({ session });
 	const [userName, setUserName] = useState(session?.data?.user?.name || "");
-	const [phonenummber, setPhonenumber] = useState("");
+	const [phoneNumber, setPhoneNumber] = useState("");
 	const [streetAddress, setStreetAddress] = useState("");
 	const [postalCode, setPostalCode] = useState("");
 	const [country, setCountry] = useState("");
@@ -26,7 +26,7 @@ function ProfilePage() {
 			setImage(session.data.user.image);
 			fetch("/api/profile").then((response) => {
 				response.json().then((data) => {
-					setPhonenumber(data.phonenummber);
+					setPhoneNumber(data.phoneNumber);
 					setStreetAddress(data.streetAddress);
 					setPostalCode(data.postalCode);
 					setCountry(data.country);
@@ -47,7 +47,7 @@ function ProfilePage() {
 				body: JSON.stringify({
 					name: userName,
 					image,
-					phonenummber,
+					phoneNumber,
 					streetAddress,
 					postalCode,
 					city,
@@ -104,8 +104,8 @@ function ProfilePage() {
 						<input
 							style={{ marginTop: "0" }}
 							type="tel"
-							value={phonenummber}
-							onChange={(event) => setPhonenumber(event.target.value)}
+							value={phoneNumber}
+							onChange={(event) => setPhoneNumber(event.target.value)}
 							placeholder="Telefonnummer"
 						/>
 
