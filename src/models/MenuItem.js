@@ -1,5 +1,11 @@
 import mongoose, { model, models, Schema } from "mongoose";
 
+const IngredientsSchema = new Schema({
+	name: String,
+	quantity: Number,
+	unit: String,
+});
+
 const MenuItemSchema = new Schema(
 	{
 		image: { type: String },
@@ -7,6 +13,7 @@ const MenuItemSchema = new Schema(
 		description: { type: String },
 		category: { type: mongoose.Types.ObjectId },
 		numberOfPeople: { type: Number },
+		ingredients: { type: [IngredientsSchema] },
 	},
 	{ timestamps: true }
 );

@@ -11,7 +11,6 @@ function MenuItemProps({ name, props, setProps, addLabel }) {
 
 	function addProp() {
 		setProps((oldProps) => {
-			// Falls oldProps undefined ist, starte mit einem leeren Array
 			const existingProps = oldProps || [];
 			return [...existingProps, { name: "" }];
 		});
@@ -23,7 +22,7 @@ function MenuItemProps({ name, props, setProps, addLabel }) {
 
 		setProps((prevProps) => {
 			const newProps = [...prevProps];
-			newProps[index] = +newValue;
+			newProps[index] = { ...newProps[index], [prop]: newValue };
 			console.log("Neue Props:", newProps);
 			return newProps;
 		});
@@ -47,28 +46,67 @@ function MenuItemProps({ name, props, setProps, addLabel }) {
 			</button>
 			<div className={isOpen ? "block" : "hidden"}>
 				{props?.length > 0 &&
-					props.map((peopleNumber, index) => (
-						<div key={index} className="flex items-end gap-2">
-							<div>
+					props.map((ingredient, index) => (
+						<div key={index} className="flex gap-2 mb-2">
+							<div className="flex-2">
 								<label>Name</label>
 								<input
 									type="text"
-									placeholder="Anzahl der Personen"
-									value={peopleNumber.name}
+									placeholder="Zutaten"
+									value={ingredient.name}
 									onChange={(ev) => editProp(ev, index, "name")}
+									className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
 								/>
 							</div>
-							<div>
+							<div className="flex-1">
+								<label>Menge</label>
+								<input
+									type="number"
+									placeholder="0"
+									value={ingredient.quantity}
+									onChange={(ev) => editProp(ev, index, "quantity")}
+									className="w-full p-2 mx-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+								/>
+							</div>
+							<div className="flex-2">
+								<label className="ml-3">Einheit</label>
+								<select
+									value={ingredient.unit}
+									onChange={(ev) => editProp(ev, index, "unit")}
+									className="w-full mx-3 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+								>
+									<option value="" className="text-center">
+										X
+									</option>
+									<option value="g" className="text-center">
+										g
+									</option>
+									<option value="Stück" className="text-center">
+										Stk
+									</option>
+									<option value="EL" className="text-center">
+										EL
+									</option>
+									<option value="TL" className="text-center">
+										TL
+									</option>
+									<option value="ml" className="text-center">
+										ml
+									</option>
+								</select>
+							</div>
+							<div className="flex items-center">
 								<button
 									type="button"
 									onClick={() => removeProp(index)}
-									className="bg-white mb-2 px-2"
+									className="bg-white w-full border p-2 m-2 mt-5"
 								>
 									<Trash />
 								</button>
 							</div>
 						</div>
 					))}
+
 				<button
 					type="button"
 					onClick={addProp}

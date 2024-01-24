@@ -11,6 +11,9 @@ function MenuItemForm({ onSubmit, menuItem }) {
 	);
 	const [category, setCategory] = useState(menuItem?.category || "");
 	const [categories, setCategories] = useState([]);
+	const [ingredients, setIngredients] = useState(
+		menuItem?.ingredients || [{ name: "", quantity: 0, unit: "" }]
+	);
 
 	useEffect(() => {
 		fetch("/api/categories").then((res) => {
@@ -22,7 +25,8 @@ function MenuItemForm({ onSubmit, menuItem }) {
 
 	useEffect(() => {
 		console.log("numberOfPeople updated:", numberOfPeople);
-	}, [numberOfPeople]);
+		console.log("ingredients updated:", ingredients);
+	}, [numberOfPeople, ingredients]);
 
 	return (
 		<form
@@ -33,6 +37,7 @@ function MenuItemForm({ onSubmit, menuItem }) {
 					name,
 					description,
 					category,
+					ingredients,
 				})
 			}
 			className=" max-w-2xl mx-auto mt-8"
@@ -80,12 +85,12 @@ function MenuItemForm({ onSubmit, menuItem }) {
 						onFocus={(event) => event.target.select()}
 					/>
 
-					{/* <MenuItemProps
-						name={"Anzahl Personen"}
-						addLabel={"Füge Personenanzahl hinzu"}
-						props={numberOfPeople}
-						setProps={setNumberOfPeople}
-					/> */}
+					<MenuItemProps
+						name={"Zutatenliste"}
+						addLabel={"Füge Zutaten hinzu"}
+						props={ingredients}
+						setProps={setIngredients}
+					/>
 
 					<button type="submit" className="mb-2">
 						Speichern
