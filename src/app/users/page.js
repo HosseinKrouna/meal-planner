@@ -1,12 +1,13 @@
 "use client";
+
 import UserTabs from "@/components/layout/UserTabs";
-import { useProfile } from "@/components/UseProfile";
+import { useProfile } from "../../components/UseProfile";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function UsersPage() {
 	const [users, setUsers] = useState([]);
-	const { loading, data } = useProfile();
+	const { loading, data: loggedInUserData } = useProfile();
 
 	useEffect(() => {
 		fetch("/api/users").then((response) => {
@@ -16,10 +17,13 @@ export default function UsersPage() {
 		});
 	}, []);
 
+	console.log(users);
+
 	if (loading) {
 		return "Loading user info...";
 	}
-	if (!data.admin) {
+
+	if (!loggedInUserData.admin) {
 		return "Not an admin";
 	}
 
@@ -38,11 +42,13 @@ export default function UsersPage() {
 									{!!user.name && <span>{user.name}</span>}
 									{!user.name && <span className="italic">No name</span>}
 								</div>
-								<span className="text-gray-500">{user.email}</span>
+								<span className="text-gray-500 overflow-hidden overflow-ellipsis max-w-xs md:max-w-none">
+									{user.email}
+								</span>
 							</div>
 							<div>
-								<Link className="button" href={"/users/" + user._id}>
-									Edit
+								<Link href={`/users/${user._id}`} as={`/users/${user._id}`}>
+									<button className="button">...mehr</button>
 								</Link>
 							</div>
 						</div>

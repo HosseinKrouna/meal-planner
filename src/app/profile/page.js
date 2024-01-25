@@ -16,7 +16,7 @@ export default function ProfilePage() {
 	const { status } = session;
 
 	useEffect(() => {
-		if (status === "authenticated") {
+		if (status === "authenticated" && !profileFetched) {
 			fetch("/api/profile").then((response) => {
 				response.json().then((data) => {
 					setUser(data);
@@ -25,7 +25,7 @@ export default function ProfilePage() {
 				});
 			});
 		}
-	}, [session, status]);
+	}, [status, profileFetched]);
 
 	async function handleProfileInfoUpdate(ev, data) {
 		ev.preventDefault();

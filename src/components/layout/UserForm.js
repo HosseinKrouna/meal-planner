@@ -1,10 +1,10 @@
 "use client";
 import AddressInputs from "@/components/layout/AddressInputs";
 import EditableImage from "@/components/layout/EditableImage";
-import { useProfile } from "@/components/UseProfile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useProfile } from "../UseProfile";
 
-export default function UserForm({ user, onSave }) {
+export default function UserForm({ user, onSave, readOnly }) {
 	const [userName, setUserName] = useState(user?.name || "");
 	const [image, setImage] = useState(user?.image || "");
 	const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || "");
@@ -13,7 +13,23 @@ export default function UserForm({ user, onSave }) {
 	const [city, setCity] = useState(user?.city || "");
 	const [country, setCountry] = useState(user?.country || "");
 	const [admin, setAdmin] = useState(user?.admin || false);
-	const { data: loggedInUserData } = useProfile();
+
+	const { data: loggedInUserData, loading } = useProfile();
+	console.log("loggedInUserData: ", loggedInUserData);
+	// useEffect(() => {
+	// 	if (user) {
+	// 		setUserName(user.name || "");
+	// 		// Setzen Sie hier andere Zustände basierend auf `user`
+	// 	}
+	// }, [user]);
+	console.log(user);
+	if (loading) {
+		return "Loading user profile...";
+	}
+
+	if (!loggedInUserData.admin) {
+		return "Not an admin";
+	}
 
 	function handleAddressChange(propName, value) {
 		if (propName === "phoneNumber") setPhoneNumber(value);
@@ -27,7 +43,7 @@ export default function UserForm({ user, onSave }) {
 		<div className="md:flex gap-4">
 			<div>
 				<div className="p-2 rounded-lg relative max-w-[120px]">
-					<EditableImage link={image} setLink={setImage} />
+					<EditableImage link={image} setLink={setImage} readOnly={readOnly} />
 				</div>
 			</div>
 			<form
@@ -88,6 +104,12 @@ export default function UserForm({ user, onSave }) {
 					</div>
 				)}
 				<button type="submit">Save</button>
+				{/* {data.admin && <button type="submit">Save</button>}
+				{!data.admin && (
+					<button type="submit" readOnly={disabled}>
+						Save
+					</button>
+				)} */}
 			</form>
 		</div>
 	);
