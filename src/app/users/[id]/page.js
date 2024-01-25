@@ -1,7 +1,7 @@
 "use client";
 import UserForm from "@/components/layout/UserForm";
 import UserTabs from "@/components/layout/UserTabs";
-import { useProfile } from "@/components/UseProfile";
+import { useProfile } from "../../../components/UseProfile";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -13,7 +13,12 @@ export default function EditUserPage() {
 
 	useEffect(() => {
 		fetch("/api/profile?_id=" + id).then((res) => {
+			if (!res.ok) {
+				console.error("Error fetching user data:", res.status, res.statusText);
+				return;
+			}
 			res.json().then((user) => {
+				console.log("User data:", user);
 				setUser(user);
 			});
 		});
@@ -21,6 +26,7 @@ export default function EditUserPage() {
 
 	async function handleSaveButtonClick(ev, data) {
 		ev.preventDefault();
+		console.log(data);
 		const promise = new Promise(async (resolve, reject) => {
 			const res = await fetch("/api/profile", {
 				method: "PUT",

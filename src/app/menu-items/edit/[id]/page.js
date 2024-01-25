@@ -3,12 +3,12 @@
 import Link from "next/link";
 import Right from "@/components/icons/Right";
 import { useEffect, useState } from "react";
-import { useProfile } from "@/components/UseProfile";
 import toast from "react-hot-toast";
 import { redirect, useParams } from "next/navigation";
 import UserTabs from "@/components/layout/UserTabs";
 import MenuItemForm from "@/components/layout/MenuItemForm";
 import DeleteButton from "@/components/layout/DeleteButton";
+import { useProfile } from "../../../../components/UseProfile";
 
 function EditMenuItemPage() {
 	const { id } = useParams();
