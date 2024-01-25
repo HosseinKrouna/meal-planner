@@ -2,12 +2,12 @@
 
 import Right from "@/components/icons/Right";
 import UserTabs from "@/components/layout/UserTabs";
-import { useProfile } from "@/components/useProfile";
 import Link from "next/link";
 import { useState } from "react";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 import MenuItemForm from "../../../components/layout/MenuItemForm";
+import { useProfile } from "../../../components/UseProfile";
 
 function NewMenuItemPage() {
 	const { loading, data } = useProfile();

@@ -1,10 +1,10 @@
 "use client";
-import { useProfile } from "@/components/useProfile";
 import UserTabs from "@/components/layout/UserTabs";
 import Right from "@/components/icons/Right";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useProfile } from "../../components/UseProfile";
 
 function MenuItemsPage() {
 	const { loading, data } = useProfile();

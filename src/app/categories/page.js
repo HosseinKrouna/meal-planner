@@ -1,7 +1,7 @@
 "use client";
 
 import UserTabs from "@/components/layout/UserTabs";
-import { useProfile } from "@/components/useProfile";
+import { useProfile } from "../../components/UseProfile";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -88,8 +88,6 @@ function CategoriesPage() {
 			<UserTabs isAdmin={true} />
 			<form className="mt-8" onSubmit={handleCategorySubmit}>
 				<div className="flex flex-col gap-2 items-end">
-					{" "}
-					{/* Änderung der Flexbox-Ausrichtung auf Spaltenrichtung für kleinere Bildschirme */}
 					<div className="w-full">
 						<label>
 							{editedCategory
