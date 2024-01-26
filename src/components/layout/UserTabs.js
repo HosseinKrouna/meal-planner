@@ -31,8 +31,11 @@ function UserTabs({ isAdmin }) {
 					</Link>
 				</>
 			)}
-			<Link className={path === "/orders" ? "active" : ""} href={"/orders"}>
-				Speisepläne
+			<Link
+				className={path.includes("/recipe-book") ? "active" : ""}
+				href={"/recipe-book"}
+			>
+				Rezeptbuch
 			</Link>
 		</div>
 	);
