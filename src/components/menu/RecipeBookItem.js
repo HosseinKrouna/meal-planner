@@ -23,14 +23,13 @@ export default function RecipeBookItem({ recipe, onRemove }) {
 				{recipe.ingredients?.length > 0 && (
 					<div className="text-sm text-gray-500">
 						{recipe.ingredients.map((ingredient) => (
-							<div key={ingredient.name}>
+							<div key={recipe._id}>
 								{ingredient.name}: {ingredient.quntity} {ingredient.unit}
 							</div>
 						))}
 					</div>
 				)}
 			</div>
-			{/* <div className="text-lg font-semibold"></div> */}
 			{!!onRemove && (
 				<div className="ml-2">
 					<button

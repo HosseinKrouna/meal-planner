@@ -2,7 +2,7 @@
 import AddressInputs from "@/components/layout/AddressInputs";
 import EditableImage from "@/components/layout/EditableImage";
 import { useEffect, useState } from "react";
-import { useProfile } from "../UseProfile";
+import { useProfile } from "../../components/useProfile";
 
 export default function UserForm({ user, onSave, readOnly }) {
 	const [userName, setUserName] = useState(user?.name || "");

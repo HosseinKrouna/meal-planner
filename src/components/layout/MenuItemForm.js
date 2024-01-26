@@ -23,11 +23,6 @@ function MenuItemForm({ onSubmit, menuItem }) {
 		});
 	}, []);
 
-	useEffect(() => {
-		console.log("numberOfPeople updated:", numberOfPeople);
-		console.log("ingredients updated:", ingredients);
-	}, [numberOfPeople, ingredients]);
-
 	return (
 		<form
 			onSubmit={(event) =>
