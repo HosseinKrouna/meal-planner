@@ -4,7 +4,7 @@ import Right from "@/components/icons/Right";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useProfile } from "../../components/UseProfile";
+import { useProfile } from "../../components/useProfile";
 
 function MenuItemsPage() {
 	const { loading, data } = useProfile();
@@ -15,9 +15,10 @@ function MenuItemsPage() {
 		fetch("/api/menu-items").then((res) => {
 			res.json().then((menuItems) => {
 				setMenuItems(menuItems);
+				console.log(data);
 			});
 		});
-	}, []);
+	}, [data]);
 
 	if (loading) {
 		return "Loading user info...";

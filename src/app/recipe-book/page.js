@@ -1,14 +1,38 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import { RecipeBookContext } from "@/components/AppContext";
 import SectionHeaders from "@/components/layout/SectionHeaders";
-// import Image from "next/image";
 import { useContext } from "react";
-// import toast from "react-hot-toast";
 import RecipeBookItem from "@/components/menu/RecipeBookItem";
 
 export default function RecipeBookPage() {
 	const { recipeBookItems, removeRecipeBookItem } =
 		useContext(RecipeBookContext);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchRecipeData = async () => {
+			try {
+				const response = await fetch("/api/menu-items");
+				const data = await response.json();
+				console.log(data);
+				// Hier kannst du die Daten im lokalen Zustand oder localStorage speichern
+				// setRecipeBookItems(data); // setze die Daten im lokalen Zustand (wenn erforderlich)
+				localStorage.setItem("recipe-book", JSON.stringify(data)); // setze die Daten im localStorage
+				setLoading(false);
+			} catch (error) {
+				console.error("Fehler beim Abrufen der Rezeptdaten:", error);
+				setLoading(false);
+			}
+		};
+
+		fetchRecipeData();
+	}, []);
+
+	if (loading) {
+		return <p>Lade Rezeptdaten...</p>;
+	}
 
 	if (recipeBookItems?.length === 0) {
 		return (
