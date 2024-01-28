@@ -22,7 +22,6 @@ function CategoriesPage() {
 			});
 		});
 	}
-
 	async function handleCategorySubmit(event) {
 		event.preventDefault();
 		const data = { name: categoryName };

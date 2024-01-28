@@ -1,34 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RecipeBookContext } from "@/components/AppContext";
 import SectionHeaders from "@/components/layout/SectionHeaders";
-import { useContext } from "react";
-import RecipeBookItem from "@/components/menu/RecipeBookItem";
+import RecipeBookItemContainer from "@/components/menu/RecipeBookItemContainer";
 
 export default function RecipeBookPage() {
-	const { recipeBookItems, removeRecipeBookItem } =
+	const { recipeBookItems, setRecipeBookItems, removeRecipeBookItem } =
 		useContext(RecipeBookContext);
+
+	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const fetchRecipeData = async () => {
-			try {
-				const response = await fetch("/api/menu-items");
-				const data = await response.json();
-				console.log(data);
-				// Hier kannst du die Daten im lokalen Zustand oder localStorage speichern
-				// setRecipeBookItems(data); // setze die Daten im lokalen Zustand (wenn erforderlich)
-				localStorage.setItem("recipe-book", JSON.stringify(data)); // setze die Daten im localStorage
-				setLoading(false);
-			} catch (error) {
-				console.error("Fehler beim Abrufen der Rezeptdaten:", error);
-				setLoading(false);
-			}
-		};
-
-		fetchRecipeData();
+		fetch("/api/categories")
+			.then((res) => res.json())
+			.then((categories) => setCategories(categories));
 	}, []);
+
+	const getRecipeBookItemsFromLocalStorage = () => {
+		const ls = typeof window !== "undefined" ? window.localStorage : null;
+
+		if (ls && ls.getItem("recipe-book")) {
+			return JSON.parse(ls.getItem("recipe-book"));
+		}
+
+		return [];
+	};
+
+	useEffect(() => {
+		const storedRecipeBookItems = getRecipeBookItemsFromLocalStorage();
+
+		if (storedRecipeBookItems.length > 0) {
+			setRecipeBookItems(storedRecipeBookItems);
+		}
+
+		setLoading(false);
+	}, [setRecipeBookItems]);
 
 	if (loading) {
 		return <p>Lade Rezeptdaten...</p>;
@@ -48,21 +56,23 @@ export default function RecipeBookPage() {
 			<div className="text-center">
 				<SectionHeaders mainHeader="Rezeptbuch" />
 			</div>
-			<div className="mt-8 grid gap-8 grid-cols-2">
-				<div>
-					{recipeBookItems?.length === 0 && (
-						<div>Es gibt keine Rezepte in deinem Rezeptbuch</div>
-					)}
-					{recipeBookItems?.length > 0 &&
-						recipeBookItems.map((recipe, index) => (
-							<RecipeBookItem
-								key={index}
-								recipe={recipe}
-								onRemove={() => removeRecipeBookItem(index)}
-							/>
-						))}
-				</div>
-			</div>
+			{categories?.length > 0 &&
+				categories.map((categoryItem) => (
+					<div key={categoryItem._id}>
+						<div className="text-center">
+							<SectionHeaders mainHeader={categoryItem.name} />
+						</div>
+						<div>
+							{recipeBookItems?.length > 0 && (
+								<RecipeBookItemContainer
+									categoryItem={categoryItem}
+									recipeBookItems={recipeBookItems}
+									removeRecipeBookItem={(item) => removeRecipeBookItem(item)}
+								/>
+							)}
+						</div>
+					</div>
+				))}
 		</section>
 	);
 }

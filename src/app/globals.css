@@ -47,3 +47,11 @@ div.tabs > *.active{
 .flying-button-parent button{
     @apply border-primary bg-primary text-white rounded-full;
 }
+
+
+
+/* .recipe-card-container {
+    @apply flex flex-col justify-between h-full border border-gray-300 rounded-xl ;
+
+} */
+  
