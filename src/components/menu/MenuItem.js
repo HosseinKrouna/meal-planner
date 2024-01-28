@@ -9,15 +9,13 @@ function MenuItem(menuItem) {
 
 	const [showPopup, setShowPopup] = useState(false);
 
-	const { recipeBookItems, addToRecipeBook } = useContext(RecipeBookContext);
+	const { addToRecipeBook } = useContext(RecipeBookContext);
 
 	async function handleAddToRecipeBookButtonClick() {
-		console.log("add to recipe book");
-		setShowPopup(true);
+		setShowPopup(false);
 
 		addToRecipeBook(menuItem, numberOfPeople, ingredients);
 		await new Promise((resolve) => setTimeout(resolve, 1000));
-		console.log("hiding popup");
 		setShowPopup(false);
 	}
 
@@ -52,7 +50,7 @@ function MenuItem(menuItem) {
 								{ingredients.map((ingredient) => ingredient.name).join(", ")}
 							</span>
 
-							<FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image}>
+							{/* <FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image}>
 								<div
 									className="primary sticky bottom-2"
 									onClick={handleAddToRecipeBookButtonClick}
@@ -62,7 +60,7 @@ function MenuItem(menuItem) {
 							</FlyingButton>
 							<button className="mt-2" onClick={() => setShowPopup(false)}>
 								Abbrechen
-							</button>
+							</button> */}
 						</div>
 					</div>
 				</div>

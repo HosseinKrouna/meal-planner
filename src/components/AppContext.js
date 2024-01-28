@@ -5,6 +5,16 @@ import { SessionProvider } from "next-auth/react";
 
 export const RecipeBookContext = createContext({});
 
+function getRecipeBookItemsFromLocalStorage() {
+	const ls = typeof window !== "undefined" ? window.localStorage : null;
+
+	if (ls && ls.getItem("recipe-book")) {
+		return JSON.parse(ls.getItem("recipe-book"));
+	}
+
+	return [];
+}
+
 export function AppProvider({ children }) {
 	const [recipeBookItems, setRecipeBookItems] = useState([]);
 
@@ -16,16 +26,24 @@ export function AppProvider({ children }) {
 		}
 	}, [ls]);
 
+	useEffect(() => {
+		const storedRecipeBookItems = getRecipeBookItemsFromLocalStorage();
+
+		if (storedRecipeBookItems.length > 0) {
+			setRecipeBookItems(storedRecipeBookItems);
+		}
+	}, []);
+
 	function clearRecipeBook() {
 		setRecipeBookItems([]);
 		saveRecipeBookItemToLocalStorage([]);
 	}
 
-	function removeRecipeBookItem(indexToRemove) {
-		console.log("removeRecipeBookItem called with index", indexToRemove);
+	function removeRecipeBookItem(itemToRemove) {
+		console.log("removeRecipeBookItem called with item", itemToRemove);
 		setRecipeBookItems((prevRecipeBookItem) => {
 			const newRecipeBookItem = prevRecipeBookItem.filter(
-				(v, index) => index !== indexToRemove
+				(item) => item !== itemToRemove
 			);
 			saveRecipeBookItemToLocalStorage(newRecipeBookItem, () => {
 				// Hier kannst du weitere Aktionen durchführen, nachdem localStorage aktualisiert wurde
@@ -44,9 +62,9 @@ export function AppProvider({ children }) {
 		}
 	}
 
-	function addToRecipeBook(recipe, numberOfPeople = null, ingredients = []) {
+	function addToRecipeBook(name, numberOfPeople, ingredients) {
 		setRecipeBookItems((prevRecipe) => {
-			const recipeBookItem = { ...recipe, numberOfPeople, ingredients };
+			const recipeBookItem = { name, numberOfPeople, ingredients };
 			const newRecipes = [...prevRecipe, recipeBookItem];
 			saveRecipeBookItemToLocalStorage(newRecipes);
 			return newRecipes;
