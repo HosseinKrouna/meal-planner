@@ -1,9 +1,9 @@
 "use client";
 
 import UserTabs from "@/components/layout/UserTabs";
-import { useProfile } from "../../components/UseProfile";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useProfile } from "../../components/UseProfile";
 
 function CategoriesPage() {
 	const [editedCategory, setEditedCategory] = useState(null);
@@ -22,7 +22,6 @@ function CategoriesPage() {
 			});
 		});
 	}
-
 	async function handleCategorySubmit(event) {
 		event.preventDefault();
 		const data = { name: categoryName };
