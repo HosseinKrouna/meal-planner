@@ -2,6 +2,7 @@
 
 import { createContext, useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
+import toast from "react-hot-toast";
 
 export const RecipeBookContext = createContext({});
 
@@ -40,14 +41,11 @@ export function AppProvider({ children }) {
 	}
 
 	function removeRecipeBookItem(itemToRemove) {
-		console.log("removeRecipeBookItem called with item", itemToRemove);
 		setRecipeBookItems((prevRecipeBookItem) => {
 			const newRecipeBookItem = prevRecipeBookItem.filter(
 				(item) => item !== itemToRemove
 			);
 			saveRecipeBookItemToLocalStorage(newRecipeBookItem, () => {
-				// Hier kannst du weitere Aktionen durchführen, nachdem localStorage aktualisiert wurde
-				console.log("Recipe removed from localStorage");
 				// toast.success("Rezept entfernt");
 			});
 			return newRecipeBookItem;
@@ -57,14 +55,13 @@ export function AppProvider({ children }) {
 	function saveRecipeBookItemToLocalStorage(recipeBookItem, callback) {
 		if (ls) {
 			ls.setItem("recipe-book", JSON.stringify(recipeBookItem));
-			// Füge eine Callback-Funktion hinzu, die nach dem Speichern aufgerufen wird
 			callback && callback();
 		}
 	}
 
-	function addToRecipeBook(name, numberOfPeople, ingredients) {
+	function addToRecipeBook(name) {
 		setRecipeBookItems((prevRecipe) => {
-			const recipeBookItem = { name, numberOfPeople, ingredients };
+			const recipeBookItem = { name };
 			const newRecipes = [...prevRecipe, recipeBookItem];
 			saveRecipeBookItemToLocalStorage(newRecipes);
 			return newRecipes;

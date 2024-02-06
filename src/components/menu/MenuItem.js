@@ -14,7 +14,7 @@ function MenuItem(menuItem) {
 	async function handleAddToRecipeBookButtonClick() {
 		setShowPopup(false);
 
-		addToRecipeBook(menuItem, numberOfPeople, ingredients);
+		addToRecipeBook(menuItem);
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 		setShowPopup(false);
 	}
@@ -37,8 +37,8 @@ function MenuItem(menuItem) {
 							<Image
 								src={image}
 								alt={name}
-								width={300}
-								height={200}
+								width="auto"
+								height="auto"
 								className="mx-auto"
 							/>
 							<h2 className="text-lg font-bold text-center mb-2">{name}</h2>
@@ -49,18 +49,6 @@ function MenuItem(menuItem) {
 								{numberOfPeople}{" "}
 								{ingredients.map((ingredient) => ingredient.name).join(", ")}
 							</span>
-
-							{/* <FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image}>
-								<div
-									className="primary sticky bottom-2"
-									onClick={handleAddToRecipeBookButtonClick}
-								>
-									Zum Rezept hinzufügen
-								</div>
-							</FlyingButton>
-							<button className="mt-2" onClick={() => setShowPopup(false)}>
-								Abbrechen
-							</button> */}
 						</div>
 					</div>
 				</div>

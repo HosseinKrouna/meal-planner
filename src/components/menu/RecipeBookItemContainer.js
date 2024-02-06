@@ -5,24 +5,27 @@ export default function RecipeBookItemContainer({
 	recipeBookItems,
 	removeRecipeBookItem,
 }) {
-	const filteredRecipes = recipeBookItems.filter(
-		(item) => item.name.category === categoryItem._id
-	);
-
-	console.log("RecipeBookItem rendered. Filtered recipes:", filteredRecipes);
+	const filteredRecipes = recipeBookItems
+		? recipeBookItems.filter((item) => item.name.category === categoryItem?._id)
+		: [];
 
 	return (
-		<section className="mt-8">
-			{filteredRecipes.map((item) => (
-				<RecipeBookItem
-					key={item.name._id}
-					name={item.name}
-					numberOfPeople={item.numberOfPeople}
-					ingredients={item.ingredients}
-					onRemove={() => removeRecipeBookItem(item)}
-					categoryItem={categoryItem}
-				/>
+		<div className="grid sm:grid-cols-3 gap-4 mt-6 mb-12">
+			{filteredRecipes.map((recipeItem) => (
+				<div key={recipeItem._id || recipeItem.name._id}>
+					{recipeItem.name && (
+						<RecipeBookItem
+							recipeBookItemsId={recipeItem.name._id}
+							key={recipeItem._id}
+							name={recipeItem.name}
+							numberOfPeople={recipeItem.name.numberOfPeople}
+							ingredients={recipeItem.name.ingredients}
+							onRemove={() => removeRecipeBookItem(recipeItem)}
+							categoryItem={categoryItem}
+						/>
+					)}
+				</div>
 			))}
-		</section>
+		</div>
 	);
 }

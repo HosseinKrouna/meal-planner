@@ -16,6 +16,7 @@ export default function RecipeBookPage() {
 		fetch("/api/categories")
 			.then((res) => res.json())
 			.then((categories) => setCategories(categories));
+		setLoading(false);
 	}, []);
 
 	const getRecipeBookItemsFromLocalStorage = () => {
@@ -42,7 +43,7 @@ export default function RecipeBookPage() {
 		return <p>Lade Rezeptdaten...</p>;
 	}
 
-	if (recipeBookItems?.length === 0) {
+	if (!categories || categories.length === 0) {
 		return (
 			<section className="mt-8 text-center">
 				<SectionHeaders mainHeader="Rezeptbuch" />
@@ -53,7 +54,7 @@ export default function RecipeBookPage() {
 
 	return (
 		<section className="mt-8">
-			<div className="text-center">
+			<div className="text-start">
 				<SectionHeaders mainHeader="Rezeptbuch" />
 			</div>
 			{categories?.length > 0 &&
@@ -68,6 +69,7 @@ export default function RecipeBookPage() {
 									categoryItem={categoryItem}
 									recipeBookItems={recipeBookItems}
 									removeRecipeBookItem={(item) => removeRecipeBookItem(item)}
+									recipeBookItemsId={recipeBookItems._id}
 								/>
 							)}
 						</div>

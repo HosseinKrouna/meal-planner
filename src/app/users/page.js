@@ -1,9 +1,9 @@
 "use client";
 
 import UserTabs from "@/components/layout/UserTabs";
-import { useProfile } from "../../components/useProfile";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useProfile } from "../../components/UseProfile";
 
 export default function UsersPage() {
 	const [users, setUsers] = useState([]);
