@@ -4,7 +4,7 @@ import Right from "@/components/icons/Right";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useProfile } from "../../components/UseProfile";
+import { useProfile } from "../../components/useProfile";
 
 function MenuItemsPage() {
 	const { loading, data } = useProfile();
@@ -51,7 +51,7 @@ function MenuItemsPage() {
 									<Image
 										className="rounded-md"
 										src={item.image}
-										alt={""}
+										alt={"Recipe image"}
 										width={200}
 										height={200}
 									/>

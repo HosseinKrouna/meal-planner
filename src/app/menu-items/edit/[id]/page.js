@@ -8,7 +8,7 @@ import { redirect, useParams } from "next/navigation";
 import UserTabs from "@/components/layout/UserTabs";
 import MenuItemForm from "@/components/layout/MenuItemForm";
 import DeleteButton from "@/components/layout/DeleteButton";
-import { useProfile } from "../../../../components/UseProfile";
+import { useProfile } from "@/components/useProfile";
 
 function EditMenuItemPage() {
 	const { id } = useParams();
@@ -28,7 +28,6 @@ function EditMenuItemPage() {
 
 	async function handleFormSubmit(event, data) {
 		event.preventDefault();
-		console.log(data);
 		data = { ...data, _id: id };
 		const savingPromise = new Promise(async (resolve, reject) => {
 			const response = await fetch("/api/menu-items", {
