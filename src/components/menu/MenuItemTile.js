@@ -46,8 +46,8 @@ export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
 							<Image
 								src={image}
 								alt={name}
-								width={420}
-								height={250}
+								width="auto"
+								height="auto"
 								className="mx-auto"
 							/>
 							<h2 className="text-lg font-bold text-center my-6">{name}</h2>

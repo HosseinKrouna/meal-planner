@@ -15,10 +15,9 @@ function MenuItemsPage() {
 		fetch("/api/menu-items").then((res) => {
 			res.json().then((menuItems) => {
 				setMenuItems(menuItems);
-				console.log(data);
 			});
 		});
-	}, [data]);
+	}, []);
 
 	if (loading) {
 		return "Loading user info...";
@@ -52,7 +51,7 @@ function MenuItemsPage() {
 									<Image
 										className="rounded-md"
 										src={item.image}
-										alt={""}
+										alt={"Recipe image"}
 										width={200}
 										height={200}
 									/>

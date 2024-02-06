@@ -18,12 +18,10 @@ function MenuItemProps({ name, props, setProps, addLabel }) {
 
 	function editProp(ev, index, prop) {
 		const newValue = ev.target.value;
-		console.log("Neuer Wert:", newValue);
 
 		setProps((prevProps) => {
 			const newProps = [...prevProps];
 			newProps[index] = { ...newProps[index], [prop]: newValue };
-			console.log("Neue Props:", newProps);
 			return newProps;
 		});
 	}
