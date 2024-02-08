@@ -1,8 +1,8 @@
 "use client";
 import AddressInputs from "@/components/layout/AddressInputs";
 import EditableImage from "@/components/layout/EditableImage";
-import { useEffect, useState } from "react";
-import { useProfile } from "../../components/useProfile";
+import { useState } from "react";
+import { useProfile } from "../useProfile";
 
 export default function UserForm({ user, onSave, readOnly }) {
 	const [userName, setUserName] = useState(user?.name || "");
@@ -15,14 +15,6 @@ export default function UserForm({ user, onSave, readOnly }) {
 	const [admin, setAdmin] = useState(user?.admin || false);
 
 	const { data: loggedInUserData, loading } = useProfile();
-	console.log("loggedInUserData: ", loggedInUserData);
-	// useEffect(() => {
-	// 	if (user) {
-	// 		setUserName(user.name || "");
-	// 		// Setzen Sie hier andere Zustände basierend auf `user`
-	// 	}
-	// }, [user]);
-	console.log(user);
 	if (loading) {
 		return "Loading user profile...";
 	}

@@ -3,7 +3,7 @@
 import UserTabs from "@/components/layout/UserTabs";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useProfile } from "../../components/UseProfile";
+import { useProfile } from "../../components/useProfile";
 
 export default function UsersPage() {
 	const [users, setUsers] = useState([]);
@@ -16,8 +16,6 @@ export default function UsersPage() {
 			});
 		});
 	}, []);
-
-	console.log(users);
 
 	if (loading) {
 		return "Loading user info...";

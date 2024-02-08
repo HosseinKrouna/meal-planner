@@ -3,8 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function RecipeBookItem(props) {
-	console.log("RecipeBookItem Props:", props);
-
 	const { name, onRemove, recipeBookItemsId } = props;
 
 	return (

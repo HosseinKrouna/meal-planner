@@ -8,7 +8,7 @@ import { redirect, useParams } from "next/navigation";
 import UserTabs from "@/components/layout/UserTabs";
 import MenuItemForm from "@/components/layout/MenuItemForm";
 import DeleteButton from "@/components/layout/DeleteButton";
-import { useProfile } from "@/components/useProfile";
+import { useProfile } from "../../../../components/useProfile";
 
 function EditMenuItemPage() {
 	const { id } = useParams();
