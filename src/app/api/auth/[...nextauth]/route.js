@@ -14,8 +14,6 @@ async function authenticate(credentials) {
 	const user = await User.findOne({ email });
 	const passwordOk = user && bcrypt.compareSync(password, user.password);
 
-	console.log({ passwordOk });
-
 	if (passwordOk) {
 		return user;
 	}

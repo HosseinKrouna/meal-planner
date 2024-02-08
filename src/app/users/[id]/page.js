@@ -18,7 +18,6 @@ export default function EditUserPage() {
 				return;
 			}
 			res.json().then((user) => {
-				console.log("User data:", user);
 				setUser(user);
 			});
 		});
@@ -26,7 +25,6 @@ export default function EditUserPage() {
 
 	async function handleSaveButtonClick(ev, data) {
 		ev.preventDefault();
-		console.log(data);
 		const promise = new Promise(async (resolve, reject) => {
 			const res = await fetch("/api/profile", {
 				method: "PUT",
