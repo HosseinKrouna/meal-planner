@@ -1,4 +1,4 @@
-import NextAuth, { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "@/models/User";
 import bcrypt from "bcrypt";
@@ -79,6 +79,6 @@ export const authOptions = {
 // 	return userInfo.admin;
 // }
 
-const handler = NextAuth(authOptions);
+// const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+// export { handler as GET, handler as POST };
