@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import NextAuth, { getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "@/models/User";
 import bcrypt from "bcrypt";
@@ -43,42 +43,21 @@ export const authOptions = {
 			authorize: authenticate,
 		}),
 	],
-
-	pages: {
-		async signIn({ url, baseUrl }) {
-			return `${baseUrl}/auth/signin?callbackUrl=${url}`;
-		},
-	},
-	callbacks: {
-		async jwt(token, user) {
-			if (user) {
-				const session = await getServerSession();
-				const userEmail = session?.user?.email;
-				if (userEmail) {
-					const userInfo = await UserInfo.findOne({ email: userEmail });
-					if (userInfo) {
-						token.isAdmin = userInfo.admin;
-					}
-				}
-			}
-			return token;
-		},
-	},
 };
 
-// export async function isAdmin() {
-// 	const session = await getServerSession(authOptions);
-// 	const userEmail = session?.user?.email;
-// 	if (!userEmail) {
-// 		return false;
-// 	}
-// 	const userInfo = await UserInfo.findOne({ email: userEmail });
-// 	if (!userInfo) {
-// 		return false;
-// 	}
-// 	return userInfo.admin;
-// }
+export async function isAdmin() {
+	const session = await getServerSession(authOptions);
+	const userEmail = session?.user?.email;
+	if (!userEmail) {
+		return false;
+	}
+	const userInfo = await UserInfo.findOne({ email: userEmail });
+	if (!userInfo) {
+		return false;
+	}
+	return userInfo.admin;
+}
 
-// const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions);
 
-// export { handler as GET, handler as POST };
+export { handler as GET, handler as POST };
