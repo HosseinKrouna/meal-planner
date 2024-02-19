@@ -3,7 +3,7 @@
 import UserTabs from "@/components/layout/UserTabs";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useProfile } from "../../components/UseProfile";
+import { useProfile } from "../../components/useProfile";
 
 function CategoriesPage() {
 	const [editedCategory, setEditedCategory] = useState(null);

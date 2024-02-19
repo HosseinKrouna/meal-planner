@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { RecipeBookContext } from "../AppContext";
-import FlyingButton from "react-flying-item";
+// import FlyingButton from "react-flying-item";
 import MenuItemTile from "@/components/menu/MenuItemTile";
 
 function MenuItem(menuItem) {
