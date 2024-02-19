@@ -43,20 +43,41 @@ export const authOptions = {
 			authorize: authenticate,
 		}),
 	],
+
+	pages: {
+		async signIn({ url, baseUrl }) {
+			return `${baseUrl}/auth/signin?callbackUrl=${url}`;
+		},
+	},
+	callbacks: {
+		async jwt(token, user) {
+			if (user) {
+				const session = await getServerSession();
+				const userEmail = session?.user?.email;
+				if (userEmail) {
+					const userInfo = await UserInfo.findOne({ email: userEmail });
+					if (userInfo) {
+						token.isAdmin = userInfo.admin;
+					}
+				}
+			}
+			return token;
+		},
+	},
 };
 
-export async function isAdmin() {
-	const session = await getServerSession(authOptions);
-	const userEmail = session?.user?.email;
-	if (!userEmail) {
-		return false;
-	}
-	const userInfo = await UserInfo.findOne({ email: userEmail });
-	if (!userInfo) {
-		return false;
-	}
-	return userInfo.admin;
-}
+// export async function isAdmin() {
+// 	const session = await getServerSession(authOptions);
+// 	const userEmail = session?.user?.email;
+// 	if (!userEmail) {
+// 		return false;
+// 	}
+// 	const userInfo = await UserInfo.findOne({ email: userEmail });
+// 	if (!userInfo) {
+// 		return false;
+// 	}
+// 	return userInfo.admin;
+// }
 
 const handler = NextAuth(authOptions);
 
