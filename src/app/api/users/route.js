@@ -3,6 +3,7 @@ import { User } from "@/models/User";
 import mongoose from "mongoose";
 
 export async function GET(req) {
+	mongoose.set("debug", true);
 	mongoose.connect(process.env.MONGO_URL);
 
 	const users = await User.find();
