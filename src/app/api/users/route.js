@@ -5,10 +5,21 @@ import mongoose from "mongoose";
 export async function GET(req) {
 	mongoose.connect(process.env.MONGO_URL);
 
-	// if (await isAdmin(req)) {
-	const users = await User.find();
-	return Response.json(users);
-	// } else {
-	// 	return Response.json([]);
-	// }
+	try {
+		const users = await User.find();
+		return Response.json(users);
+	} finally {
+		mongoose.disconnect();
+	}
 }
+
+// export async function GET(req) {
+// 	mongoose.connect(process.env.MONGO_URL);
+
+// 	// if (await isAdmin(req)) {
+// 	const users = await User.find();
+// 	return Response.json(users);
+// 	// } else {
+// 	// 	return Response.json([]);
+// 	// }
+// }
