@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/libs/mongoConnect";
+import NextAuth from "next-auth";
 
 async function authenticate(credentials) {
 	const email = credentials?.email;
