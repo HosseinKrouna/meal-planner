@@ -6,7 +6,10 @@ if (!process.env.MONGO_URL) {
 }
 
 const uri = process.env.MONGO_URL;
-const options = {};
+const options = {
+	serverSelectionTimeoutMS: 30000,
+	heartbeatFrequencyMS: 5000,
+};
 
 let client;
 let clientPromise;
