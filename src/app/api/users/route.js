@@ -5,12 +5,8 @@ import mongoose from "mongoose";
 export async function GET(req) {
 	mongoose.connect(process.env.MONGO_URL);
 
-	try {
-		const users = await User.find();
-		return Response.json(users);
-	} finally {
-		mongoose.disconnect();
-	}
+	const users = await User.find();
+	return Response.json(users);
 }
 
 // export async function GET(req) {
