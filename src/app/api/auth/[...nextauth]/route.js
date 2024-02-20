@@ -2,8 +2,6 @@ import NextAuth from "next-auth";
 import { authOptions } from "@/libs/authConfig";
 // import { UserInfo } from "@/models/UserInfo";
 
-export default authOptions;
-
 // export async function isAdmin() {
 // 	const session = await getServerSession(authOptions);
 // 	const userEmail = session?.user?.email;
