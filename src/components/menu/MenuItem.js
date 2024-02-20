@@ -37,8 +37,9 @@ function MenuItem(menuItem) {
 							<Image
 								src={image}
 								alt={name}
-								width="auto"
-								height="auto"
+								width={30}
+								height={30}
+								// style={{ width: "160px", height: "60px" }}
 								className="mx-auto"
 							/>
 							<h2 className="text-lg font-bold text-center mb-2">{name}</h2>
