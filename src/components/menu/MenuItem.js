@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { RecipeBookContext } from "../AppContext";
-import FlyingButton from "react-flying-item";
+// import FlyingButton from "react-flying-item";
 import MenuItemTile from "@/components/menu/MenuItemTile";
 
 function MenuItem(menuItem) {
@@ -37,8 +37,9 @@ function MenuItem(menuItem) {
 							<Image
 								src={image}
 								alt={name}
-								width="auto"
-								height="auto"
+								width={30}
+								height={30}
+								// style={{ width: "160px", height: "60px" }}
 								className="mx-auto"
 							/>
 							<h2 className="text-lg font-bold text-center mb-2">{name}</h2>
