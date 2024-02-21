@@ -27,10 +27,13 @@ yarn-error.log*
 
 # local env files
 .env*.local
+
+# Ignoriere die .env-Datei
 .env
 
 # vercel
 .vercel
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
