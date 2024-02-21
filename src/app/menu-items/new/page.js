@@ -7,7 +7,7 @@ import { useState } from "react";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 import MenuItemForm from "../../../components/layout/MenuItemForm";
-import { useProfile } from "../../../components/UseProfile";
+import { useProfile } from "../../../components/useProfile";
 
 function NewMenuItemPage() {
 	const { loading, data } = useProfile();
