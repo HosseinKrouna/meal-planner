@@ -10,6 +10,13 @@ export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
 		setShowPreview(true);
 	}
 
+	function handleAddToRecipeBook() {
+		onAddToRecipeBook();
+		setTimeout(() => {
+			setShowPreview(false);
+		}, 3000);
+	}
+
 	return (
 		<div className=" bg-gray-200 p-4 rounded-lg text-center group hover:bg-white hover:shadow-md hover:shadow-black/25 transition-all">
 			<div className="text-center">
@@ -46,9 +53,8 @@ export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
 							<Image
 								src={image}
 								alt={name}
-								width={30}
-								height={30}
-								// style={{ width: "160px", height: "60px" }}
+								width={160}
+								height={80}
 								className="mx-auto"
 							/>
 							<h2 className="text-lg font-bold text-center my-6">{name}</h2>
@@ -61,10 +67,10 @@ export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
 								{ingredients.map((ingredient) => ingredient.name).join(", ")}
 							</p>
 							<div className="flex justify-center items-center">
-								<div>
+								<div className="p-4">
 									<AddToRecipeBookButton
 										image={image}
-										onClick={onAddToRecipeBook}
+										onClick={handleAddToRecipeBook}
 									/>
 								</div>
 								<button onClick={() => setShowPreview(false)}>Abbrechen</button>

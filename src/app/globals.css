@@ -44,15 +44,11 @@ div.tabs > *.active{
     @apply bg-primary text-white;
 }
 
-.flying-button-parent button{
-    @apply border-primary bg-primary text-white rounded-full;
+.flying-button-parent {
+    @apply font-semibold text-lg flex w-full justify-center gap-2 border-primary bg-primary  text-white rounded-full px-2;
 }
 
-
-
-
-/* .recipe-card-container {
-    @apply flex flex-col justify-between h-full border border-gray-300 rounded-xl ;
-
-} */
+.flying-button-parent:hover {
+    cursor: pointer; 
+}
   
