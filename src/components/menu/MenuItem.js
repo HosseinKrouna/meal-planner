@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { RecipeBookContext } from "../AppContext";
-// import FlyingButton from "react-flying-item";
 import MenuItemTile from "@/components/menu/MenuItemTile";
 
 function MenuItem(menuItem) {
@@ -34,14 +33,9 @@ function MenuItem(menuItem) {
 							className="overflow-y-scroll p-2"
 							style={{ maxHeight: "calc(100vh - 100px)" }}
 						>
-							<Image
-								src={image}
-								alt={name}
-								width={30}
-								height={30}
-								// style={{ width: "160px", height: "60px" }}
-								className="mx-auto"
-							/>
+							<div className="mx-auto">
+								<Image src={image} alt={name} width={160} height={80} />
+							</div>
 							<h2 className="text-lg font-bold text-center mb-2">{name}</h2>
 							<p className="text-center text-gray-500 text-sm mb-2">
 								{description}

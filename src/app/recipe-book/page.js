@@ -4,8 +4,14 @@ import { useContext, useEffect, useState } from "react";
 import { RecipeBookContext } from "@/components/AppContext";
 import SectionHeaders from "@/components/layout/SectionHeaders";
 import RecipeBookItemContainer from "@/components/menu/RecipeBookItemContainer";
+import { FaTrash } from "react-icons/fa";
 
 export default function RecipeBookPage() {
+	const handleClearAll = () => {
+		localStorage.removeItem("recipe-book");
+		setRecipeBookItems([]);
+	};
+
 	const { recipeBookItems, setRecipeBookItems, removeRecipeBookItem } =
 		useContext(RecipeBookContext);
 
@@ -54,16 +60,28 @@ export default function RecipeBookPage() {
 
 	return (
 		<section className="mt-8">
-			<div className="text-start">
-				<SectionHeaders mainHeader="Rezeptbuch" />
+			<div className="flex">
+				<div className="text-start">
+					<SectionHeaders mainHeader="Rezeptbuch" />
+				</div>
+				<div className="flex ml-4">
+					<button
+						onClick={handleClearAll}
+						className="bg-red-500 text-white p-2 ml-6 rounded flex items-center "
+					>
+						<FaTrash />
+						Alle löschen
+					</button>
+				</div>
 			</div>
+
 			{categories?.length > 0 &&
 				categories.map((categoryItem) => (
 					<div key={categoryItem._id}>
-						<div className="text-center">
+						<div className="text-center mt-10">
 							<SectionHeaders mainHeader={categoryItem.name} />
 						</div>
-						<div>
+						<div className="mt-12">
 							{recipeBookItems?.length > 0 && (
 								<RecipeBookItemContainer
 									categoryItem={categoryItem}
