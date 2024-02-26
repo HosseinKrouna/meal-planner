@@ -32,9 +32,9 @@ export default function AddToRecipeBookButton({ onClick, image }) {
 						width={220}
 						height={150}
 						initial={{ opacity: 1, y: 0 }} // Startposition und Opazität
-						animate={{ opacity: 1, y: -100, x: "100vw" }} // Endposition und Opazität
+						animate={{ opacity: 1, y: -800, x: "100vw" }} // Endposition und Opazität
 						exit={{ opacity: 0 }} // Option für den Exit-Zustand
-						transition={{ duration: 2, type: "linear" }} // Dauer der Animation und lineare Bewegung
+						transition={{ duration: 1.5, type: "linear" }} // Dauer der Animation und lineare Bewegung
 						controls={controls} // Verwendet die gleichen Animationseinstellungen für Enter und Exit
 						onAnimationComplete={() => setIsClicked(false)} // Wird aufgerufen, wenn die Animation abgeschlossen ist
 					/>

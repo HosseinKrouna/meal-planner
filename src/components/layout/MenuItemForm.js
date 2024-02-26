@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import EditableImage from "@/components/layout/EditableImage";
 import MenuItemProps from "@/components/layout/MenuItemProps";
+import Plus from "../icons/Plus";
 
 function MenuItemForm({ onSubmit, menuItem }) {
 	const [image, setImage] = useState(menuItem?.image || "");
@@ -11,9 +12,10 @@ function MenuItemForm({ onSubmit, menuItem }) {
 	);
 	const [category, setCategory] = useState(menuItem?.category || "");
 	const [categories, setCategories] = useState([]);
-	const [ingredients, setIngredients] = useState(
-		menuItem?.ingredients || [{ name: "", quantity: 0, unit: "" }]
+	const [ingredientsGroups, setIngredientsGroups] = useState(
+		menuItem?.ingredientsList || []
 	);
+	const [currentGroupName, setCurrentGroupName] = useState("");
 
 	useEffect(() => {
 		fetch("/api/categories").then((res) => {
@@ -22,6 +24,16 @@ function MenuItemForm({ onSubmit, menuItem }) {
 			});
 		});
 	}, []);
+
+	function handleAddingredientGroup() {
+		if (currentGroupName.trim() !== "") {
+			setIngredientsGroups((prevIngredientsGroups) => [
+				...prevIngredientsGroups,
+				{ groupName: currentGroupName, ingredients: [] },
+			]);
+			setCurrentGroupName(""); // Zurücksetzen des aktuellen Gruppennamens
+		}
+	}
 
 	return (
 		<form
@@ -32,10 +44,10 @@ function MenuItemForm({ onSubmit, menuItem }) {
 					name,
 					description,
 					category,
-					ingredients,
+					ingredientsGroups,
 				})
 			}
-			className=" max-w-2xl mx-auto mt-8"
+			className="max-w-2xl mx-auto mt-8"
 		>
 			<div
 				className="md:grid items-start gap-4"
@@ -79,12 +91,26 @@ function MenuItemForm({ onSubmit, menuItem }) {
 						className="border w-20 border-gray-300 rounded-md p-2 focus:outline-none mx-1 my-4 focus:border-blue-500"
 						onFocus={(event) => event.target.select()}
 					/>
+					<div className="flex items-center">
+						<label>Name der Zutatengruppe</label>
+						<input
+							type="text"
+							value={currentGroupName}
+							onChange={(event) => setCurrentGroupName(event.target.value)}
+							className="border w-20 border-gray-300 rounded-md p-2 focus:outline-none mx-1 my-4 focus:border-blue-500"
+							onFocus={(event) => event.target.select()}
+						/>
+						<div
+							onClick={handleAddingredientGroup}
+							className="bg-green-500 p-3 text-white 2xl hover:cursor-pointer font-bold border-green-700 rounded-md"
+						>
+							<Plus />
+						</div>
+					</div>
 
 					<MenuItemProps
-						name={"Zutatenliste"}
-						addLabel={"Füge Zutaten hinzu"}
-						props={ingredients}
-						setProps={setIngredients}
+						ingredientsGroups={ingredientsGroups}
+						setIngredientsGroups={setIngredientsGroups}
 					/>
 
 					<button type="submit" className="mb-2">

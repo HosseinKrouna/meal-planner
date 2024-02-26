@@ -1,9 +1,14 @@
 import mongoose, { model, models, Schema } from "mongoose";
 
-const IngredientsSchema = new Schema({
-	name: String,
+const IngredientSchema = new Schema({
+	ingredientName: String,
 	quantity: Number,
 	unit: String,
+});
+
+const IngredientsListSchema = new Schema({
+	ingredientsGroup: String,
+	ingredients: [IngredientSchema],
 });
 
 const MenuItemSchema = new Schema(
@@ -13,7 +18,7 @@ const MenuItemSchema = new Schema(
 		description: { type: String },
 		category: { type: mongoose.Types.ObjectId },
 		numberOfPeople: { type: Number },
-		ingredients: { type: [IngredientsSchema] },
+		ingredientsList: [IngredientsListSchema],
 	},
 	{ timestamps: true }
 );

@@ -8,18 +8,15 @@ export async function POST(req) {
 	return Response.json(menuItemDoc);
 }
 
-// Erweitere deine GET-API
 export async function GET(req) {
 	mongoose.connect(process.env.MONGO_URL);
 	const url = new URL(req.url);
 	const _id = url.searchParams.get("_id");
 
 	if (_id) {
-		// Wenn eine ID angegeben ist, gib das spezifische Rezept zurück
 		const menuItem = await MenuItem.findById(_id);
 		return Response.json(menuItem);
 	} else {
-		// Andernfalls gib alle Rezepte zurück
 		const menuItems = await MenuItem.find();
 		return Response.json(menuItems);
 	}

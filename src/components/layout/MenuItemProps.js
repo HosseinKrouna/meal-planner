@@ -5,29 +5,22 @@ import Plus from "@/components/icons/Plus";
 import ChevronUp from "@/components/icons/ChevronUp";
 import ChevronDown from "@/components/icons/ChevronDown";
 import { useState } from "react";
+import MenuItemPropsGroup from "@/components/menu/MenuItemPropsGroup";
 
-function MenuItemProps({ name, props, setProps, addLabel }) {
+function MenuItemProps({ ingredientsGroups, setIngredientsGroups }) {
 	const [isOpen, setIsOpen] = useState(false);
 
-	function addProp() {
-		setProps((oldProps) => {
-			const existingProps = oldProps || [];
-			return [...existingProps, { name: "" }];
-		});
+	function addIngredientsGroup() {
+		setIngredientsGroups((prevGroups) => [
+			...prevGroups,
+			{ groupName: "", ingredients: [] },
+		]);
 	}
 
-	function editProp(ev, index, prop) {
-		const newValue = ev.target.value;
-
-		setProps((prevProps) => {
-			const newProps = [...prevProps];
-			newProps[index] = { ...newProps[index], [prop]: newValue };
-			return newProps;
-		});
-	}
-
-	function removeProp(indexToRemove) {
-		setProps((prev) => prev.filter((v, index) => index !== indexToRemove));
+	function removeIngredientsGroup(indexToRemove) {
+		setIngredientsGroups((prevGroups) =>
+			prevGroups.filter((group, index) => index !== indexToRemove)
+		);
 	}
 
 	return (
@@ -39,79 +32,55 @@ function MenuItemProps({ name, props, setProps, addLabel }) {
 			>
 				{isOpen && <ChevronUp />}
 				{!isOpen && <ChevronDown />}
-				<span>{name}</span>
-				<span>({props?.length})</span>
+				<span>Zutatenliste</span>
+				<span>({ingredientsGroups?.length})</span>
 			</button>
 			<div className={isOpen ? "block" : "hidden"}>
-				{props?.length > 0 &&
-					props.map((ingredient, index) => (
-						<div key={index} className="flex gap-2 mb-2">
-							<div className="flex-2">
-								<label>Name</label>
+				{Array.isArray(ingredientsGroups) &&
+					ingredientsGroups.map((group, index) => (
+						<div key={index} className="mb-4">
+							<div className="flex items-center">
+								<label className="mr-2">Name der Zutatengruppe</label>
 								<input
 									type="text"
-									placeholder="Zutaten"
-									value={ingredient.name}
-									onChange={(ev) => editProp(ev, index, "name")}
-									className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+									value={group.groupName}
+									onChange={(e) => {
+										const newGroups = [...ingredientsGroups];
+										newGroups[index].groupName = e.target.value;
+										setIngredientsGroups(newGroups);
+									}}
+									className="border w-40 border-gray-300 rounded-md p-2 focus:outline-none mx-1 my-4 focus:border-blue-500"
+									onFocus={(event) => event.target.select()}
 								/>
-							</div>
-							<div className="flex-1">
-								<label>Menge</label>
-								<input
-									type="number"
-									placeholder="0"
-									value={ingredient.quantity}
-									onChange={(ev) => editProp(ev, index, "quantity")}
-									className="w-full p-2 mx-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-								/>
-							</div>
-							<div className="flex-2">
-								<label className="ml-3">Einheit</label>
-								<select
-									value={ingredient.unit}
-									onChange={(ev) => editProp(ev, index, "unit")}
-									className="w-full mx-3 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-								>
-									<option value="" className="text-center">
-										X
-									</option>
-									<option value="g" className="text-center">
-										g
-									</option>
-									<option value="Stück" className="text-center">
-										Stk
-									</option>
-									<option value="EL" className="text-center">
-										EL
-									</option>
-									<option value="TL" className="text-center">
-										TL
-									</option>
-									<option value="ml" className="text-center">
-										ml
-									</option>
-								</select>
-							</div>
-							<div className="flex items-center">
 								<button
 									type="button"
-									onClick={() => removeProp(index)}
+									onClick={() => removeIngredientsGroup(index)}
 									className="bg-white w-full border p-2 m-2 mt-5"
 								>
 									<Trash />
 								</button>
 							</div>
+
+							{/* //FIXME - Ingredients editable
+
+
+							<MenuItemPropsGroup
+								ingredients={group.ingredients}
+								setIngredients={(newIngredients) => {
+									const newGroups = [...ingredientsGroups];
+									newGroups[index].ingredients = newIngredients;
+									setIngredientsGroups(newGroups);
+								}}
+							/> */}
 						</div>
 					))}
-
 				<button
 					type="button"
-					onClick={addProp}
+					onClick={addIngredientsGroup}
 					className="bg-white items-center"
 				>
 					<Plus className="w-4 h-4" />
-					<span>{addLabel}</span>
+					<span>Füge Zutatengruppe hinzu</span>
 				</button>
 			</div>
 		</div>
