@@ -15,14 +15,6 @@ export default function UserForm({ user, onSave, readOnly }) {
 	const [admin, setAdmin] = useState(user?.admin || false);
 
 	const { data: loggedInUserData, loading } = useProfile();
-	console.log("loggedInUserData: ", loggedInUserData);
-	// useEffect(() => {
-	// 	if (user) {
-	// 		setUserName(user.name || "");
-	// 		// Setzen Sie hier andere Zustände basierend auf `user`
-	// 	}
-	// }, [user]);
-	console.log(user);
 	if (loading) {
 		return "Loading user profile...";
 	}

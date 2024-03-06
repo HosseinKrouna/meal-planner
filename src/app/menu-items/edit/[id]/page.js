@@ -28,6 +28,7 @@ function EditMenuItemPage() {
 
 	async function handleFormSubmit(event, data) {
 		event.preventDefault();
+
 		data = { ...data, _id: id };
 		const savingPromise = new Promise(async (resolve, reject) => {
 			const response = await fetch("/api/menu-items", {

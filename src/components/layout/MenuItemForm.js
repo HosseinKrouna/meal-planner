@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import EditableImage from "@/components/layout/EditableImage";
-import MenuItemProps from "@/components/layout/MenuItemProps";
+import MenuItemIngredientsListProps from "@/components/layout/MenuItemIngredientsListProps";
 
 function MenuItemForm({ onSubmit, menuItem }) {
 	const [image, setImage] = useState(menuItem?.image || "");
+	const [recipeName, setRecipeName] = useState(menuItem?.recipeName || "");
 	const [description, setDescription] = useState(menuItem?.description || "");
-	const [name, setName] = useState(menuItem?.name || "");
+	const [category, setCategory] = useState(menuItem?.category || "");
+	const [categories, setCategories] = useState([]);
 	const [numberOfPeople, setNumberOfPeople] = useState(
 		menuItem?.numberOfPeople || 0
 	);
-	const [category, setCategory] = useState(menuItem?.category || "");
-	const [categories, setCategories] = useState([]);
-	const [ingredients, setIngredients] = useState(
-		menuItem?.ingredients || [{ name: "", quantity: 0, unit: "" }]
+	const [ingredientsList, setIngredientsList] = useState(
+		menuItem?.ingredientsList || []
 	);
 
 	useEffect(() => {
@@ -29,13 +29,13 @@ function MenuItemForm({ onSubmit, menuItem }) {
 				onSubmit(event, {
 					numberOfPeople,
 					image,
-					name,
+					recipeName,
 					description,
 					category,
-					ingredients,
+					ingredientsList,
 				})
 			}
-			className=" max-w-2xl mx-auto mt-8"
+			className="max-w-2xl mx-auto mt-8"
 		>
 			<div
 				className="md:grid items-start gap-4"
@@ -48,15 +48,17 @@ function MenuItemForm({ onSubmit, menuItem }) {
 					<label>Rezeptname</label>
 					<input
 						type="text"
-						value={name}
-						onChange={(event) => setName(event.target.value)}
+						value={recipeName}
+						onChange={(event) => setRecipeName(event.target.value)}
 					/>
+
 					<label>Beschreibung</label>
 					<input
 						type="text"
 						value={description}
 						onChange={(event) => setDescription(event.target.value)}
 					/>
+
 					<label>Kategorie</label>
 					<select
 						value={category}
@@ -79,14 +81,10 @@ function MenuItemForm({ onSubmit, menuItem }) {
 						className="border w-20 border-gray-300 rounded-md p-2 focus:outline-none mx-1 my-4 focus:border-blue-500"
 						onFocus={(event) => event.target.select()}
 					/>
-
-					<MenuItemProps
-						name={"Zutatenliste"}
-						addLabel={"Füge Zutaten hinzu"}
-						props={ingredients}
-						setProps={setIngredients}
+					<MenuItemIngredientsListProps
+						ingredientsList={ingredientsList}
+						setIngredientsList={setIngredientsList}
 					/>
-
 					<button type="submit" className="mb-2">
 						Speichern
 					</button>

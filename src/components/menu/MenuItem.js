@@ -4,7 +4,8 @@ import { RecipeBookContext } from "../AppContext";
 import MenuItemTile from "@/components/menu/MenuItemTile";
 
 function MenuItem(menuItem) {
-	const { image, name, description, numberOfPeople, ingredients } = menuItem;
+	const { image, recipeName, description, numberOfPeople, ingredientsList } =
+		menuItem;
 
 	const [showPopup, setShowPopup] = useState(false);
 
@@ -34,15 +35,19 @@ function MenuItem(menuItem) {
 							style={{ maxHeight: "calc(100vh - 100px)" }}
 						>
 							<div className="mx-auto">
-								<Image src={image} alt={name} width={160} height={80} />
+								<Image src={image} alt={recipeName} width={160} height={80} />
 							</div>
-							<h2 className="text-lg font-bold text-center mb-2">{name}</h2>
+							<h2 className="text-lg font-bold text-center mb-2">
+								{recipeName}
+							</h2>
 							<p className="text-center text-gray-500 text-sm mb-2">
 								{description}
 							</p>
 							<span>
 								{numberOfPeople}{" "}
-								{ingredients.map((ingredient) => ingredient.name).join(", ")}
+								{ingredientsList
+									.map((ingredient) => ingredient.ingredients[0].ingredientName)
+									.join(", ")}
 							</span>
 						</div>
 					</div>

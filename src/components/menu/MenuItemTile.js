@@ -3,7 +3,8 @@ import { useState } from "react";
 import AddToRecipeBookButton from "@/components/menu/AddToRecipeBookButton";
 
 export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
-	const { image, name, description, numberOfPeople, ingredients } = item;
+	const { image, recipeName, description, numberOfPeople, ingredientsList } =
+		item;
 	const [showPreview, setShowPreview] = useState(false);
 
 	function handlePreviewButtonClick() {
@@ -28,7 +29,7 @@ export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
 					height={150}
 				/>
 			</div>
-			<h4 className="font-semibold text-xl my-3 mt-8">{name}</h4>
+			<h4 className="font-semibold text-xl my-3 mt-8">{recipeName}</h4>
 			<AddToRecipeBookButton image={image} onClick={onAddToRecipeBook} />
 			<div className="mt-4">
 				<button className="bg-white" onClick={handlePreviewButtonClick}>
@@ -52,19 +53,23 @@ export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
 						>
 							<Image
 								src={image}
-								alt={name}
+								alt={recipeName}
 								width={160}
 								height={80}
 								className="mx-auto"
 							/>
-							<h2 className="text-lg font-bold text-center my-6">{name}</h2>
+							<h2 className="text-lg font-bold text-center my-6">
+								{recipeName}
+							</h2>
 							<p className="text-center text-gray-500 text-sm mb-4">
 								{description}
 							</p>
 							<p>Anzahl der Personen: {numberOfPeople}</p>
 							<p>
 								Zutaten:{" "}
-								{ingredients.map((ingredient) => ingredient.name).join(", ")}
+								{ingredientsList
+									.map((ingredient) => ingredient.name)
+									.join(", ")}
 							</p>
 							<div className="flex justify-center items-center">
 								<div className="p-4">

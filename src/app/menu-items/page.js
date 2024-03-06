@@ -60,7 +60,7 @@ function MenuItemsPage() {
 									style={{ fontSize: 11 }}
 									className="text-center font-bold mt-2 mx-4"
 								>
-									{item.name}
+									{item.recipeName}
 								</div>
 							</Link>
 						))}
