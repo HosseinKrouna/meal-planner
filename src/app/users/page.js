@@ -17,8 +17,6 @@ export default function UsersPage() {
 		});
 	}, []);
 
-	console.log(users);
-
 	if (loading) {
 		return "Loading user info...";
 	}
