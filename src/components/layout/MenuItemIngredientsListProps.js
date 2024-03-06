@@ -135,7 +135,7 @@ function MenuItemIngredientsListProps({ ingredientsList, setIngredientsList }) {
 				>
 					Zutatengruppe hinzufügen
 				</button>
-				<div className="m-2 bg-gray-400">
+				<div>
 					{ingredientsList?.map((group, groupIndex) => (
 						<IngredientList
 							key={groupIndex}

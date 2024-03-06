@@ -27,7 +27,7 @@ function Ingredient({
 							ev.target.value
 						)
 					}
-					className="border p-2 rounded-md mt-1 mb-2 block w-full"
+					className="border-2 border-green-500 p-2 rounded-md mt-1 mb-2 block w-full focus:outline-none focus:border-green-500"
 				/>
 			</div>
 			<div className="flex items-center w-full">

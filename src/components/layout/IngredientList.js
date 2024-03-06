@@ -21,7 +21,7 @@ function IngredientList({
 	};
 
 	return (
-		<div className="bg-gray-200 p-2 shadow-md rounded-md mb-2">
+		<div className="bg-gray-200 p-2 shadow-md rounded-md mb-2 border-2 border-yellow-400">
 			<button
 				onClick={handleToggle}
 				className="flex items-center w-full p-2 border-0 justify-start"
@@ -43,9 +43,10 @@ function IngredientList({
 							type="text"
 							value={group.ingredientsGroup}
 							onChange={(e) => onUpdateGroup(groupIndex, e.target.value)}
-							className="border p-2 rounded-md mt-1 mb-2 block w-full"
+							className="border-2 border-yellow-500 p-2 rounded-md mt-1 mb-2 block w-full focus:outline-none focus:border-yellow-500"
 						/>
 					</div>
+
 					<div className=" border-green-600 p-2 border-2 shadow rounded-md">
 						{group.ingredients.map((ingredient, ingredientIndex) => (
 							<Ingredient
@@ -73,7 +74,7 @@ function IngredientList({
 						<button
 							type="button"
 							onClick={() => onRemoveGroup(groupIndex)}
-							className="bg-white border p-2 mt-5 rounded-md w-full"
+							className="bg-yellow-200 text-red-500 border p-2 mt-5 rounded-md w-full"
 						>
 							<Trash />
 							Zutatengruppe entfernen
