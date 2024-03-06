@@ -36,7 +36,7 @@ function IngredientList({
 			</button>
 
 			{isOpen && (
-				<div className="flex flex-col gap-2 mt-2">
+				<div className=" flex flex-col gap-2 mt-2">
 					<div>
 						<label className="font-bold">Name der Zutatengruppe</label>
 						<input
@@ -46,16 +46,19 @@ function IngredientList({
 							className="border p-2 rounded-md mt-1 mb-2 block w-full"
 						/>
 					</div>
-					{group.ingredients.map((ingredient, ingredientIndex) => (
-						<Ingredient
-							key={ingredientIndex}
-							ingredient={ingredient}
-							groupIndex={groupIndex}
-							ingredientIndex={ingredientIndex}
-							onEditIngredient={onEditIngredient}
-							onRemoveIngredient={onRemoveIngredient}
-						/>
-					))}
+					<div className=" border-green-600 p-2 border-2 shadow rounded-md">
+						{group.ingredients.map((ingredient, ingredientIndex) => (
+							<Ingredient
+								key={ingredientIndex}
+								ingredient={ingredient}
+								groupIndex={groupIndex}
+								ingredientIndex={ingredientIndex}
+								onEditIngredient={onEditIngredient}
+								onRemoveIngredient={onRemoveIngredient}
+							/>
+						))}
+					</div>
+
 					<div className="flex items-center">
 						<button
 							type="button"

@@ -12,7 +12,7 @@ function Ingredient({
 	};
 
 	return (
-		<div className="flex flex-col gap-2">
+		<div className="bg-gray-300 mb-2 p-2 flex flex-col gap-2 justify-center">
 			<div>
 				<label className="font-bold">Neue Zutat</label>
 				<input
@@ -30,8 +30,8 @@ function Ingredient({
 					className="border p-2 rounded-md mt-1 mb-2 block w-full"
 				/>
 			</div>
-			<div className="flex items-center gap-2">
-				<div className="flex items-center">
+			<div className="flex items-center w-full">
+				<div className="w-1/2 pr-2 flex flex-col">
 					<label className="font-bold">Menge</label>
 					<input
 						type="number"
@@ -45,10 +45,10 @@ function Ingredient({
 								ev.target.value
 							)
 						}
-						className="w-20 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+						className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
 					/>
 				</div>
-				<div className="flex items-center">
+				<div className="w-1/2 flex flex-col">
 					<label className="font-bold">Einheit</label>
 					<select
 						value={ingredient.unit}
@@ -60,7 +60,7 @@ function Ingredient({
 								ev.target.value
 							)
 						}
-						className="w-20 px-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+						className="w-full px-2 border mb-0 border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
 					>
 						<option value="">X</option>
 						<option value="g">g</option>
@@ -71,16 +71,15 @@ function Ingredient({
 						<option value="Bund">Bund</option>
 					</select>
 				</div>
-				<div className=" items-center">
-					<button
-						type="button"
-						onClick={handleRemoveIngredient}
-						className="bg-white border p-2"
-					>
-						<Trash />
-						Zutat entfernen
-					</button>
-				</div>
+			</div>
+			<div className="w-full mt-2">
+				<button
+					type="button"
+					onClick={handleRemoveIngredient}
+					className="text-red-500 bg-white p-2 w-full rounded-md"
+				>
+					<Trash />
+				</button>
 			</div>
 		</div>
 	);
