@@ -24,8 +24,8 @@ export default function HomeMenu() {
 			</div>
 			<div className="text-center mb-4">
 				<SectionHeaders
-					subHeader={"Check doch mal"}
-					mainHeader={"Diese Rezepte"}
+					subHeader={"Check doch mal die"}
+					mainHeader={"Neusten Rezepte"}
 				/>
 			</div>
 			<div className="grid sm:grid-cols-3 gap-4">

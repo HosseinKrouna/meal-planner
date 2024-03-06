@@ -3,8 +3,7 @@ import { useState } from "react";
 import AddToRecipeBookButton from "@/components/menu/AddToRecipeBookButton";
 
 export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
-	const { image, recipeName, description, numberOfPeople, ingredientsList } =
-		item;
+	const { image, recipeName, description } = item;
 	const [showPreview, setShowPreview] = useState(false);
 
 	function handlePreviewButtonClick() {
@@ -48,28 +47,21 @@ export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
 						className="my-8 bg-white p-2 rounded-lg max-w-md"
 					>
 						<div
-							className="overflow-y-scroll p-2 mt-4 px-4"
+							className="overflow-y-auto p-2 mt-4 px-4"
 							style={{ maxHeight: "calc(100vh - 100px)" }}
 						>
 							<Image
 								src={image}
 								alt={recipeName}
-								width={160}
-								height={80}
-								className="mx-auto"
+								width={360}
+								height={280}
+								className="mx-auto rounded-md"
 							/>
 							<h2 className="text-lg font-bold text-center my-6">
 								{recipeName}
 							</h2>
 							<p className="text-center text-gray-500 text-sm mb-4">
 								{description}
-							</p>
-							<p>Anzahl der Personen: {numberOfPeople}</p>
-							<p>
-								Zutaten:{" "}
-								{ingredientsList
-									.map((ingredient) => ingredient.name)
-									.join(", ")}
 							</p>
 							<div className="flex justify-center items-center">
 								<div className="p-4">
