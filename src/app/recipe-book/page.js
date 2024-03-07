@@ -77,11 +77,7 @@ export default function RecipeBookPage() {
 					<SectionHeaders mainHeader="Rezeptbuch" />
 				</div>
 				<div className=" ml-4">
-					<DeleteButton
-						label="Alle löschen"
-						onDelete={handleClearAll}
-						className="text-red-500"
-					/>
+					<DeleteButton label="Alle löschen" onDelete={handleClearAll} />
 				</div>
 			</div>
 

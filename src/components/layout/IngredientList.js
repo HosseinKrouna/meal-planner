@@ -4,6 +4,7 @@ import Trash from "@/components/icons/Trash";
 import Plus from "@/components/icons/Plus";
 import Ingredient from "@/components/layout/Ingredient";
 import { useState } from "react";
+import DeleteButton from "./DeleteButton";
 
 function IngredientList({
 	group,
@@ -64,7 +65,7 @@ function IngredientList({
 						<button
 							type="button"
 							onClick={() => onAddIngredient(groupIndex)}
-							className="bg-green-500 items-center ml-2"
+							className="bg-green-500 items-center"
 						>
 							<Plus className="w-4 h-4" />
 							<span>Weitere Zutat hinzufügen</span>
@@ -73,11 +74,15 @@ function IngredientList({
 					<div>
 						<button
 							type="button"
-							onClick={() => onRemoveGroup(groupIndex)}
-							className="bg-yellow-200 text-red-500 border p-2 mt-5 rounded-md w-full"
+							// onClick={}
+							className="flex border-0 bg-yellow-200 p-2 mt-5 rounded-md w-full"
 						>
-							<Trash />
-							Zutatengruppe entfernen
+							<DeleteButton
+								onIcon={<Trash />}
+								onClassName="text-red-500 border-0"
+								label={"Zutatengruppe entfernen"}
+								onDelete={onRemoveGroup}
+							/>
 						</button>
 					</div>
 				</div>

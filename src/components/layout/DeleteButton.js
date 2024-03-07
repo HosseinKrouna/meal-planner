@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function DeleteButton({ label, onDelete }) {
+export default function DeleteButton({ onIcon, label, onDelete, onClassName }) {
 	const [showConfirm, setShowConfirm] = useState(false);
 
 	if (showConfirm) {
@@ -18,7 +18,7 @@ export default function DeleteButton({ label, onDelete }) {
 								setShowConfirm(false);
 							}}
 							type="button"
-							className="primary"
+							className="bg-red-500 text-white px-3 py-1 rounded-md items-center"
 						>
 							Ja,&nbsp;löschen!
 						</button>
@@ -29,7 +29,12 @@ export default function DeleteButton({ label, onDelete }) {
 	}
 
 	return (
-		<button type="button" onClick={() => setShowConfirm(true)}>
+		<button
+			className={onClassName}
+			type="button"
+			onClick={() => setShowConfirm(true)}
+		>
+			{onIcon}
 			{label}
 		</button>
 	);
