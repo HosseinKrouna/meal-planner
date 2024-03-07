@@ -12,7 +12,10 @@ export default function RecipeBookItemContainer({
 	return (
 		<div className="grid sm:grid-cols-3 gap-4 mt-6 mb-12">
 			{filteredRecipes.map((recipeItem) => (
-				<div key={recipeItem._id || recipeItem.name._id}>
+				<div
+					key={recipeItem._id || recipeItem.name._id}
+					className="recipe-card-container"
+				>
 					{recipeItem.name && (
 						<RecipeBookItem
 							recipeBookItemsId={recipeItem.name._id}
