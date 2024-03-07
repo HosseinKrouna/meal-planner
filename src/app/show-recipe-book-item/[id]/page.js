@@ -15,6 +15,8 @@ function ShowRecipeItemPage() {
 		? recipeBookItems.filter((item) => item.name._id === id)
 		: [];
 
+	console.log("foundedRecipes: ", foundedRecipes);
+
 	const getRecipeBookItemsFromLocalStorage = () => {
 		const ls = typeof window !== "undefined" ? window.localStorage : null;
 
@@ -50,23 +52,41 @@ function ShowRecipeItemPage() {
 					className="rounded-lg mx-auto"
 				/>
 				<h1 className="text-4xl font-bold mt-4">
-					{foundedRecipes[0]?.name?.name}
+					{foundedRecipes[0]?.name?.recipeName}
 				</h1>
-				<p className="text-gray-600">
-					Zutaten für {foundedRecipes[0]?.name?.numberOfPeople} Rouladen
+				<p className="text-gray-600 mt-4 text-lg">
+					Zutaten für {foundedRecipes[0]?.name?.numberOfPeople} Personen
 				</p>
-				<ul className="pl-6 mt-2">
-					{foundedRecipes[0]?.name?.ingredients.map((ingredient, index) => (
-						<li key={index} className="mb-1 flex items-center">
-							<input type="checkbox" className="mr-2" />
-							<span className="font-semibold">{ingredient.name} </span>
-							<span className="ml-2">
-								{ingredient.quantity} {ingredient.unit}
+
+				<ul className="pl-6 mt-10 space-y-4">
+					{foundedRecipes[0]?.name?.ingredientsList.map((group, groupIndex) => (
+						<li key={groupIndex} className="mb-2">
+							<span className="font-semibold text-2xl">
+								{group.ingredientsGroup}
 							</span>
+							<ul className="flex flex-col space-y-2 items-start">
+								{group.ingredients.map((ingredient, ingredientIndex) => (
+									<div className="flex" key={ingredientIndex}>
+										<li className="space-x-4">
+											<div className="flex justify-between items-center">
+												<div className="px-2">
+													<input type="checkbox" />
+												</div>
+												<div className="text-lg " style={{ width: "120px" }}>
+													<span>{ingredient.quantity}</span>{" "}
+													<span>{ingredient.unit}</span>
+												</div>
+												<div className="font-medium text-lg pl-8 ">
+													<span>{ingredient.ingredientName}</span>
+												</div>
+											</div>
+										</li>
+									</div>
+								))}
+							</ul>
 						</li>
 					))}
 				</ul>
-				<h2 className="text-2xl font-bold mt-4">Zubereitung</h2>
 			</div>
 		</section>
 	);

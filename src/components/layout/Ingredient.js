@@ -34,6 +34,11 @@ function Ingredient({
 				<div className="w-1/2 pr-2 flex flex-col">
 					<label className="font-bold">Menge</label>
 					<input
+						//FIXME - Do not transfer the default value 0,
+						//instead send an empty div if no information
+						//other than the name is necessary to get the
+						//appropriate size such as the div of the unit
+						//and quantity for the ShowRecipePage.
 						type="number"
 						placeholder="0"
 						value={ingredient.quantity}
@@ -69,6 +74,7 @@ function Ingredient({
 						<option value="TL">TL</option>
 						<option value="ml">ml</option>
 						<option value="Bund">Bund</option>
+						<option value="Prise(n)">{"Prise(n)"}</option>
 					</select>
 				</div>
 			</div>
