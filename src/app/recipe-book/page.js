@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import { RecipeBookContext } from "@/components/AppContext";
 import SectionHeaders from "@/components/layout/SectionHeaders";
 import RecipeBookItemContainer from "@/components/menu/RecipeBookItemContainer";
-import { FaTrash } from "react-icons/fa";
 import ChevronDown from "@/components/icons/ChevronDown";
 import ChevronUp from "@/components/icons/ChevronUp";
 import DeleteButton from "@/components/layout/DeleteButton";

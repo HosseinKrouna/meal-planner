@@ -1,6 +1,7 @@
 import Trash from "@/components/icons/Trash";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteButton from "../layout/DeleteButton";
 
 export default function RecipeBookItem(props) {
 	const { name, onRemove, recipeBookItemsId } = props;
@@ -34,15 +35,11 @@ export default function RecipeBookItem(props) {
 
 			{!!onRemove && (
 				<div className="mt-4">
-					<button
-						type="button"
-						onClick={() => {
-							onRemove();
-						}}
-						className="p-2 mt-2 bg-gray-100"
-					>
-						<Trash />
-					</button>
+					<DeleteButton
+						label={<Trash />}
+						onDelete={() => onRemove()}
+						onClassName="p-2 mt-2 bg-gray-100"
+					/>
 				</div>
 			)}
 		</div>
