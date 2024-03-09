@@ -96,6 +96,7 @@ function MenuItemForm({ onSubmit, menuItem }) {
 						steps={steps}
 						setSteps={setSteps}
 					/>
+
 					<button type="submit" className="mb-2">
 						Speichern
 					</button>

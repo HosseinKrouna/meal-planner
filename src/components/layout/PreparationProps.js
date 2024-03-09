@@ -1,7 +1,13 @@
-import React from "react";
-import PreparationStep from "@/components/layout/PreparationStep";
+import PreparationStepTile from "@/components/layout/PreparationStepTile";
+import { useState } from "react";
+import DeleteButton from "./DeleteButton";
+import Trash from "../icons/Trash";
+import Plus from "../icons/Plus";
 
-function PreparationProps({ preparation, setPreparation }) {
+function PreparationProps({ preparation, setPreparation, steps, setSteps }) {
+	const [newPreparationStepSection, setNewPreparationStepSection] =
+		useState("");
+
 	const handlePreparationChange = (e) => {
 		setPreparation({
 			...preparation,
@@ -10,29 +16,28 @@ function PreparationProps({ preparation, setPreparation }) {
 	};
 
 	const handleAddPreparationStep = () => {
-		setPreparation({
-			...preparation,
-			steps: [
-				...preparation.steps,
-				{ stepName: "", preparationDescription: "" },
-			],
-		});
+		console.log("Vor dem Hinzufügen:", newPreparationStepSection);
+		if (newPreparationStepSection.trim() !== "") {
+			console.log("Schritt wird hinzugefügt:", newPreparationStepSection);
+			setSteps((prevSteps) => [
+				...prevSteps,
+				{ stepName: newPreparationStepSection, preparationDescription: "" },
+			]);
+			setNewPreparationStepSection("");
+		}
 	};
-
 	const handleUpdateStep = (index, updatedStep) => {
-		setPreparation({
-			...preparation,
-			steps: preparation.steps.map((step, i) =>
-				i === index ? updatedStep : step
-			),
-		});
+		console.log("Schritt wird aktualisiert:", index, updatedStep);
+		setSteps((prevSteps) => [
+			...prevSteps.slice(0, index),
+			updatedStep,
+			...prevSteps.slice(index + 1),
+		]);
 	};
 
 	const handleDeleteStep = (index) => {
-		setPreparation({
-			...preparation,
-			steps: preparation.steps.filter((_, i) => i !== index),
-		});
+		console.log("Schritt wird gelöscht:", index);
+		setSteps((prevSteps) => prevSteps.filter((_, i) => i !== index));
 	};
 
 	const handleCookingBakingTimeChange = (e) => {
@@ -49,8 +54,8 @@ function PreparationProps({ preparation, setPreparation }) {
 			</div>
 			<label className="font-bold">Zubereitungszeiten</label>
 			<div className="flex flex-col px-2 mt-2 space-x-4">
-				<div className=" mb-3 flex items-center">
-					<label className="mr-2 ">Vorbereitungszeit</label>
+				<div className="mb-3 flex items-center">
+					<label className="mr-2">Vorbereitungszeit</label>
 					<input
 						type="number"
 						className="rounded w-20 focus:outline-none text-center"
@@ -59,8 +64,7 @@ function PreparationProps({ preparation, setPreparation }) {
 					/>
 					<span className="ml-2">Minuten</span>
 				</div>
-
-				<div className="rounded-md mb-3 flex items-center">
+				<div className="rounded-md mb-4 flex items-center">
 					<label className="mr-2">Koch-/Backzeit</label>
 					<input
 						type="number"
@@ -72,34 +76,43 @@ function PreparationProps({ preparation, setPreparation }) {
 				</div>
 			</div>
 			<label className="font-bold">Zubereitungsschritte</label>
-			{preparation.steps?.map((step, index) => (
-				<PreparationStep
-					key={index}
-					step={step}
-					index={index}
-					onDelete={handleDeleteStep}
-					onUpdate={handleUpdateStep}
+			<div className="mt-2">
+				<label>Arbeitsschritt</label>
+				<input
+					type="text"
+					placeholder="Erstelle hier einen neuen Arbeitsschritt"
+					value={newPreparationStepSection}
+					onChange={(e) => setNewPreparationStepSection(e.target.value)}
+					className="mt-2"
 				/>
-			))}
-			<textarea
-				value={preparation.steps?.map((step) => step.stepName).join("\n")}
-				onChange={(e) => {
-					const steps = e.target.value.split("\n").map((stepName) => ({
-						stepName,
-						preparationDescription: "",
-					}));
-					setPreparation({ ...preparation, steps });
-				}}
-				placeholder="Geben Sie hier die Zubereitungsschritte ein..."
-				className="mt-1 w-full p-2 border rounded-md"
-			/>
+			</div>
 			<button
 				type="button"
 				onClick={handleAddPreparationStep}
 				className="mb-3 bg-white"
 			>
-				Zubereitungsschritt hinzufügen
+				<Plus />
+				Arbeitsschritt hinzufügen
 			</button>
+			{steps.map((step, index) => (
+				<div key={index} className="mb-3">
+					<PreparationStepTile
+						key={index}
+						step={step}
+						index={index}
+						onDelete={(e) => handleDeleteStep(index, e)}
+						onhandleUpdateStep={handleUpdateStep}
+					/>
+				</div>
+			))}
+			<div>
+				<DeleteButton
+					onIcon={<Trash />}
+					onClassName="text-red-500 border-0"
+					label={"Alle Zubereitungsschritte entfernen"}
+					onDelete={() => setPreparation({ ...preparation, steps: [] })}
+				/>
+			</div>
 		</div>
 	);
 }

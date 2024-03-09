@@ -74,7 +74,6 @@ function IngredientList({
 					<div>
 						<button
 							type="button"
-							// onClick={}
 							className="flex border-0 bg-yellow-200 p-2 mt-5 rounded-md w-full"
 						>
 							<DeleteButton
