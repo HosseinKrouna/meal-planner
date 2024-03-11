@@ -88,6 +88,50 @@ function ShowRecipeItemPage() {
 					))}
 				</ul>
 			</div>
+			<div className="flex mt-10">
+				<h2 class="text-3xl font-bold">Zubereitung</h2>
+			</div>
+			<div class="flex mt-8 items-center">
+				<div class="flex-grow border-b-2 border-green-600"></div>
+				<h2 class="text-2xl font-medium mx-4">Zubereitungszeit:</h2>
+				<div class="flex-grow border-b-2 border-green-600"></div>
+			</div>
+
+			<div className="flex justify-center">
+				<div className=" mt-5">
+					<div className="w-1/2 mr-5">
+						<span className="font-bold">Vorbereitungszeit</span>
+					</div>
+					<div className="flex justify-center">
+						<div className="text-left text-green-600 font-semibold text-lg">
+							{foundedRecipes[0]?.name.preparation.makeReadyTime} Minuten
+						</div>
+					</div>
+				</div>
+				<div className=" mt-5">
+					<div className="w-1/2">
+						<span className="font-bold">Koch-/Backzeit</span>
+					</div>
+					<div className="flex justify-center">
+						<div className="text-left text-green-600 font-semibold text-lg">
+							{foundedRecipes[0]?.name.preparation.cookingBakingTime} Minuten
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className="flex ">
+				<div className="mt-10">
+					{foundedRecipes[0]?.name.steps.map((step, index) => (
+						<div key={index}>
+							<div className="mb-4 text-2xl mt-6 font-bold text-green-500">
+								{step.stepName}
+							</div>
+							<div>{step.preparationDescription}</div>
+						</div>
+					))}
+				</div>
+			</div>
 		</section>
 	);
 }
