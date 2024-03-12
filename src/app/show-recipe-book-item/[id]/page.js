@@ -2,11 +2,11 @@
 
 import React from "react";
 import HighlightIngredients from "@/components/layout/HighlightIngredients";
-// import parse from "html-react-parser";
 import { useContext, useEffect, useState } from "react";
 import { RecipeBookContext } from "@/components/AppContext";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import NutritionalValuesPerServing from "@/components/layout/NutritionalValuesPerServing";
 
 function ShowRecipeItemPage() {
 	const { recipeBookItems, setRecipeBookItems } = useContext(RecipeBookContext);
@@ -44,32 +44,9 @@ function ShowRecipeItemPage() {
 		return <p>Lade Rezeptdaten...</p>;
 	}
 
-	// const markBold = (node) => {
-	// 	if (node.type === "tag" && node.name === "span") {
-	// 		return React.cloneElement(node, { className: "font-bold" });
-	// 	}
-	// 	return node;
-	// };
-
-	// const formatDescription = (description) => {
-	// 	const regex = /ingredients/gi;
-	// 	const parts = description.split(regex);
-
-	// 	return (
-	// 		<div>
-	// 			{parts.map((part, index) => (
-	// 				<React.Fragment key={index}>
-	// 					{index > 0 && <span className="font-bold">ingredients</span>}
-	// 					<div>{index > 0 ? parse(part, { replace: markBold }) : part}</div>
-	// 				</React.Fragment>
-	// 			))}
-	// 		</div>
-	// 	);
-	// };
-
 	return (
 		<section className="mt-8 mx-auto max-w-2xl">
-			<div className="text-center">
+			<div className="text-center mb-8">
 				<Image
 					src={foundedRecipes[0]?.name?.image}
 					alt="Recipe image"
@@ -117,6 +94,10 @@ function ShowRecipeItemPage() {
 					))}
 				</ul>
 			</div>
+			<div className="mt-10">
+				<NutritionalValuesPerServing foundedRecipes={foundedRecipes} />
+			</div>
+
 			<div className="flex mt-10">
 				<h2 class="text-3xl font-bold">Zubereitung</h2>
 			</div>
