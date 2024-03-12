@@ -21,6 +21,14 @@ const PreparationTimeSchema = new Schema({
 	cookingBakingTime: Number,
 });
 
+const NutritionalValuesSchema = new Schema({
+	calories: Number,
+	carbohydrates: Number,
+	protein: Number,
+	fat: Number,
+	fiber: Number,
+});
+
 const MenuItemSchema = new Schema(
 	{
 		image: { type: String },
@@ -31,6 +39,7 @@ const MenuItemSchema = new Schema(
 		ingredientsList: [IngredientsGroupSchema],
 		preparation: PreparationTimeSchema,
 		steps: [StepsSchema],
+		nutritionalValuesPerServing: NutritionalValuesSchema,
 	},
 	{ timestamps: true }
 );
