@@ -1,5 +1,8 @@
 "use client";
 
+import React from "react";
+import HighlightIngredients from "@/components/layout/HighlightIngredients";
+// import parse from "html-react-parser";
 import { useContext, useEffect, useState } from "react";
 import { RecipeBookContext } from "@/components/AppContext";
 import { useParams } from "next/navigation";
@@ -41,6 +44,29 @@ function ShowRecipeItemPage() {
 		return <p>Lade Rezeptdaten...</p>;
 	}
 
+	// const markBold = (node) => {
+	// 	if (node.type === "tag" && node.name === "span") {
+	// 		return React.cloneElement(node, { className: "font-bold" });
+	// 	}
+	// 	return node;
+	// };
+
+	// const formatDescription = (description) => {
+	// 	const regex = /ingredients/gi;
+	// 	const parts = description.split(regex);
+
+	// 	return (
+	// 		<div>
+	// 			{parts.map((part, index) => (
+	// 				<React.Fragment key={index}>
+	// 					{index > 0 && <span className="font-bold">ingredients</span>}
+	// 					<div>{index > 0 ? parse(part, { replace: markBold }) : part}</div>
+	// 				</React.Fragment>
+	// 			))}
+	// 		</div>
+	// 	);
+	// };
+
 	return (
 		<section className="mt-8 mx-auto max-w-2xl">
 			<div className="text-center">
@@ -61,9 +87,12 @@ function ShowRecipeItemPage() {
 				<ul className="pl-6 mt-10 space-y-4">
 					{foundedRecipes[0]?.name?.ingredientsList.map((group, groupIndex) => (
 						<li key={groupIndex} className="mb-2">
-							<span className="font-semibold text-2xl">
-								{group.ingredientsGroup}
-							</span>
+							<div className="mb-4 mt-10">
+								<span className="font-semibold text-2xl">
+									{group.ingredientsGroup}
+								</span>
+							</div>
+
 							<ul className="flex flex-col space-y-2 items-start">
 								{group.ingredients.map((ingredient, ingredientIndex) => (
 									<div className="flex" key={ingredientIndex}>
@@ -100,7 +129,7 @@ function ShowRecipeItemPage() {
 			<div className="flex justify-center">
 				<div className=" mt-5">
 					<div className="w-1/2 mr-5">
-						<span className="font-bold">Vorbereitungszeit</span>
+						<span className="font-medium">Vorbereitungszeit</span>
 					</div>
 					<div className="flex justify-center">
 						<div className="text-left text-green-600 font-semibold text-lg">
@@ -110,7 +139,7 @@ function ShowRecipeItemPage() {
 				</div>
 				<div className=" mt-5">
 					<div className="w-1/2">
-						<span className="font-bold">Koch-/Backzeit</span>
+						<span className="font-medium">Koch-/Backzeit</span>
 					</div>
 					<div className="flex justify-center">
 						<div className="text-left text-green-600 font-semibold text-lg">
@@ -127,7 +156,7 @@ function ShowRecipeItemPage() {
 							<div className="mb-4 text-2xl mt-6 font-bold text-green-500">
 								{step.stepName}
 							</div>
-							<div>{step.preparationDescription}</div>
+							<HighlightIngredients description={step.preparationDescription} />{" "}
 						</div>
 					))}
 				</div>
