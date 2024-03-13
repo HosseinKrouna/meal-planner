@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import EditableImage from "@/components/layout/EditableImage";
 import MenuItemIngredientsListProps from "@/components/layout/MenuItemIngredientsListProps";
 import PreparationProps from "@/components/layout/PreparationProps";
+import NutritionalValuesProps from "@/components/layout/NutritionalValuesProps";
 
 function MenuItemForm({ onSubmit, menuItem }) {
 	const [image, setImage] = useState(menuItem?.image || "");
@@ -17,6 +18,8 @@ function MenuItemForm({ onSubmit, menuItem }) {
 	);
 	const [preparation, setPreparation] = useState(menuItem?.preparation || {});
 	const [steps, setSteps] = useState(menuItem?.steps || []);
+	const [nutritionalValuesPerServing, setNutritionalValuesPerServing] =
+		useState(menuItem?.nutritionalValuesPerServing || {});
 
 	useEffect(() => {
 		fetch("/api/categories").then((res) => {
@@ -38,6 +41,7 @@ function MenuItemForm({ onSubmit, menuItem }) {
 					ingredientsList,
 					preparation,
 					steps,
+					nutritionalValuesPerServing,
 				})
 			}
 			className="max-w-2xl mx-auto mt-8"
@@ -89,6 +93,11 @@ function MenuItemForm({ onSubmit, menuItem }) {
 					<MenuItemIngredientsListProps
 						ingredientsList={ingredientsList}
 						setIngredientsList={setIngredientsList}
+					/>
+					{/* //TODO - add editable NutritionalValues from schema here  */}
+					<NutritionalValuesProps
+						nutritionalValuesPerServing={nutritionalValuesPerServing}
+						setNutritionalValuesPerServing={setNutritionalValuesPerServing}
 					/>
 					<PreparationProps
 						preparation={preparation}

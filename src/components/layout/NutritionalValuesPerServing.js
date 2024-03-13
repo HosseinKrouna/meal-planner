@@ -1,5 +1,5 @@
 function NutritionalValuesPerServing({ foundedRecipes }) {
-	const recipe = foundedRecipes[0]?.name.preparation;
+	const recipe = foundedRecipes[0]?.name.nutritionalValuesPerServing;
 
 	return (
 		<>
@@ -14,35 +14,35 @@ function NutritionalValuesPerServing({ foundedRecipes }) {
 					<div className="flex flex-col items-center mx-4 my-2">
 						<span className="font-medium">Kalorien</span>
 						<span className="text-green-600 font-semibold text-lg">
-							{recipe.makeReadyTime} kcal
+							{recipe.calories} kcal
 						</span>
 					</div>
 
 					<div className="flex flex-col items-center mx-4 my-2">
 						<span className="font-medium">Kohlenhydrate</span>
 						<span className="text-green-600 font-semibold text-lg">
-							{recipe.cookingBakingTime} g
+							{recipe.carbohydrates} g
 						</span>
 					</div>
 
 					<div className="flex flex-col items-center mx-4 my-2">
 						<span className="font-medium">Eiweiss</span>
 						<span className="text-green-600 font-semibold text-lg">
-							{recipe.cookingBakingTime} g
+							{recipe.protein} g
 						</span>
 					</div>
 
 					<div className="flex flex-col items-center mx-4 my-2">
 						<span className="font-medium">Fett</span>
 						<span className="text-green-600 font-semibold text-lg">
-							{recipe.cookingBakingTime} g
+							{recipe.fat} g
 						</span>
 					</div>
 
 					<div className="flex flex-col items-center mx-4 my-2">
 						<span className="font-medium">Ballaststoffe</span>
 						<span className="text-green-600 font-semibold text-lg">
-							{recipe.cookingBakingTime} g
+							{recipe.fiber} g
 						</span>
 					</div>
 				</div>
