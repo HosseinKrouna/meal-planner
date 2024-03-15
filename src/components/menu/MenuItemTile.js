@@ -3,7 +3,13 @@ import { useState } from "react";
 import AddToRecipeBookButton from "@/components/menu/AddToRecipeBookButton";
 
 export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
-	const { image, recipeName, description } = item;
+	const {
+		image,
+		recipeName,
+		description,
+		preparation,
+		nutritionalValuesPerServing,
+	} = item;
 	const [showPreview, setShowPreview] = useState(false);
 
 	function handlePreviewButtonClick() {
@@ -63,15 +69,78 @@ export default function MenuItemTile({ onAddToRecipeBook, ...item }) {
 							<p className="text-center text-gray-500 text-sm mb-4">
 								{description}
 							</p>
-							<div className="flex justify-center items-center">
-								<div className="p-4">
-									<AddToRecipeBookButton
-										image={image}
-										onClick={handleAddToRecipeBook}
-									/>
+
+							<div className="flex justify-center">
+								<div className="text-left text-green-600 font-semibold text-lg">
+									{preparation.makeReadyTime} Minuten
 								</div>
-								<button onClick={() => setShowPreview(false)}>Abbrechen</button>
 							</div>
+						</div>
+						<div className=" mt-5">
+							<div className="w-1/2">
+								<span className="font-medium">Koch-/Backzeit</span>
+							</div>
+							<div className="flex justify-center">
+								<div className="text-left text-green-600 font-semibold text-lg">
+									{preparation.cookingBakingTime} Minuten
+								</div>
+							</div>
+						</div>
+
+						<div className="flex mt-10 items-center">
+							<div className="flex-grow border-b-2 border-green-600"></div>
+							<h2 className="text-2xl font-medium mx-4">
+								Nährwerte pro Portion
+							</h2>
+							<div className="flex-grow border-b-2 border-green-600"></div>
+						</div>
+
+						<div className="flex flex-col items-center mt-2">
+							<div className="flex flex-wrap justify-center mt-5">
+								<div className="flex flex-col items-center mx-4 my-2">
+									<span className="font-medium">Kalorien</span>
+									<span className="text-green-600 font-semibold text-lg">
+										{nutritionalValuesPerServing.calories} kcal
+									</span>
+								</div>
+
+								<div className="flex flex-col items-center mx-4 my-2">
+									<span className="font-medium">Kohlenhydrate</span>
+									<span className="text-green-600 font-semibold text-lg">
+										{nutritionalValuesPerServing.carbohydrates} g
+									</span>
+								</div>
+
+								<div className="flex flex-col items-center mx-4 my-2">
+									<span className="font-medium">Eiweiss</span>
+									<span className="text-green-600 font-semibold text-lg">
+										{nutritionalValuesPerServing.protein} g
+									</span>
+								</div>
+
+								<div className="flex flex-col items-center mx-4 my-2">
+									<span className="font-medium">Fett</span>
+									<span className="text-green-600 font-semibold text-lg">
+										{nutritionalValuesPerServing.fat} g
+									</span>
+								</div>
+
+								<div className="flex flex-col items-center mx-4 my-2">
+									<span className="font-medium">Ballaststoffe</span>
+									<span className="text-green-600 font-semibold text-lg">
+										{nutritionalValuesPerServing.fiber} g
+									</span>
+								</div>
+							</div>
+						</div>
+						<div className="flex justify-center items-center">
+							<div className="p-4">
+								<AddToRecipeBookButton
+									image={image}
+									onClick={handleAddToRecipeBook}
+								/>
+							</div>
+							<button onClick={() => setShowPreview(false)}>Abbrechen</button>
 						</div>
 					</div>
 				</div>
