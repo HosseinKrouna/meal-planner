@@ -94,7 +94,6 @@ function MenuItemForm({ onSubmit, menuItem }) {
 						ingredientsList={ingredientsList}
 						setIngredientsList={setIngredientsList}
 					/>
-					{/* //TODO - add editable NutritionalValues from schema here  */}
 					<NutritionalValuesProps
 						nutritionalValuesPerServing={nutritionalValuesPerServing}
 						setNutritionalValuesPerServing={setNutritionalValuesPerServing}
