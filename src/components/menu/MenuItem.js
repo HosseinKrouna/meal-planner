@@ -43,12 +43,6 @@ function MenuItem(menuItem) {
 							<p className="text-center text-gray-500 text-sm mb-2">
 								{description}
 							</p>
-							{/* <span>
-								{numberOfPeople}{" "}
-								{ingredientsList
-									.map((ingredient) => ingredient.ingredients[0].ingredientName)
-									.join(", ")}
-							</span> */}
 						</div>
 					</div>
 				</div>

@@ -1,15 +1,29 @@
 import BookOpen from "../icons/BookOpen";
 import { motion, useAnimation } from "framer-motion";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { RecipeBookContext } from "@/components/AppContext"; // Stelle sicher, dass der korrekte Pfad verwendet wird
 
-export default function AddToRecipeBookButton({ onClick, image }) {
-	const [isClicked, setIsClicked] = useState(false);
+export default function AddToRecipeBookButton({ item, image, _id }) {
+	const [isAdded, setIsAdded] = useState(false);
+	const [showNotification, setShowNotification] = useState(false); // Neuer Zustand für die Benachrichtigung
+	const { recipeBookItems, addToRecipeBook } = useContext(RecipeBookContext);
 	const controls = useAnimation();
 
 	const handleButtonClick = async () => {
-		setIsClicked(true);
-		onClick();
-		await controls.start({ opacity: 1, y: -100, x: "100vw" });
+		// Überprüfe, ob das Rezept bereits im Rezeptbuch vorhanden ist
+		const isRecipeInBook = recipeBookItems.some((item) => item._id === _id);
+
+		console.log(isRecipeInBook);
+		// Wenn das Rezept nicht im Rezeptbuch ist, füge es hinzu
+		if (!isRecipeInBook) {
+			addToRecipeBook(item);
+			setIsAdded(true);
+			await controls.start({ opacity: 1, y: -100, x: "100vw" });
+		} else {
+			// Wenn das Rezept bereits im Rezeptbuch ist, zeige die Benachrichtigung an
+			setShowNotification(true);
+			console.log("Rezept ist bereits im Rezeptbuch vorhanden.");
+		}
 	};
 
 	return (
@@ -24,24 +38,29 @@ export default function AddToRecipeBookButton({ onClick, image }) {
 					<BookOpen />
 				</div>
 			</div>
-			{isClicked && (
+			{isAdded && (
 				<>
 					<motion.img
 						src={image}
-						alt="Recipe image"
-						width={220}
-						height={150}
-						initial={{ opacity: 1, y: 0 }} // Startposition und Opazität
-						animate={{ opacity: 1, y: -100, x: "100vw" }} // Endposition und Opazität
-						exit={{ opacity: 0 }} // Option für den Exit-Zustand
-						transition={{ duration: 2, type: "linear" }} // Dauer der Animation und lineare Bewegung
-						controls={controls} // Verwendet die gleichen Animationseinstellungen für Enter und Exit
-						onAnimationComplete={() => setIsClicked(false)} // Wird aufgerufen, wenn die Animation abgeschlossen ist
+						width={180}
+						height={100}
+						className="pb-12 text-primary font-semibold"
+						initial={{ opacity: 1, y: 0 }}
+						animate={{ opacity: 1, y: -100, x: "100vw" }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 2, type: "linear" }}
+						controls={controls}
+						onAnimationComplete={() => setIsAdded(false)}
 					/>
-					<p className="pb-12 text-primary font-semibold">
-						Liegt jetzt in deinem Rezeptbuch!
+					<p className="text-green-500 font-semibold">
+						Liegt nun in deinem Rezeptbuch!
 					</p>
 				</>
+			)}
+			{showNotification && (
+				<p className="text-red-500 font-semibold">
+					Rezept ist bereits im Rezeptbuch vorhanden.
+				</p>
 			)}
 		</>
 	);

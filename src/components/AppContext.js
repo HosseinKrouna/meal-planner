@@ -59,9 +59,21 @@ export function AppProvider({ children }) {
 		}
 	}
 
-	function addToRecipeBook(name) {
+	function addToRecipeBook(item) {
+		// Überprüfen, ob das Element bereits im recipeBook vorhanden ist
+		const recipeExists = recipeBookItems.some(
+			(recipe) => recipe._id === item._id
+		);
+
+		if (recipeExists) {
+			// Wenn das Rezept bereits vorhanden ist, können Sie eine Meldung anzeigen oder nichts tun
+			console.log("Rezept bereits im Rezeptbuch vorhanden.");
+			return;
+		}
+
+		// Fügen Sie das Rezept nur hinzu, wenn es noch nicht vorhanden ist
 		setRecipeBookItems((prevRecipe) => {
-			const recipeBookItem = { name };
+			const recipeBookItem = { ...item };
 			const newRecipes = [...prevRecipe, recipeBookItem];
 			saveRecipeBookItemToLocalStorage(newRecipes);
 			return newRecipes;

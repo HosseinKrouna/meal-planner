@@ -4,7 +4,9 @@ import { useContext, useEffect, useState } from "react";
 import { RecipeBookContext } from "@/components/AppContext";
 import SectionHeaders from "@/components/layout/SectionHeaders";
 import RecipeBookItemContainer from "@/components/menu/RecipeBookItemContainer";
-import { FaTrash } from "react-icons/fa";
+import ChevronDown from "@/components/icons/ChevronDown";
+import ChevronUp from "@/components/icons/ChevronUp";
+import DeleteButton from "@/components/layout/DeleteButton";
 
 export default function RecipeBookPage() {
 	const handleClearAll = () => {
@@ -16,6 +18,8 @@ export default function RecipeBookPage() {
 		useContext(RecipeBookContext);
 
 	const [categories, setCategories] = useState([]);
+	const [openCategories, setOpenCategories] = useState({}); // Zustand für geöffnete Kategorien
+
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -58,39 +62,54 @@ export default function RecipeBookPage() {
 		);
 	}
 
+	const toggleCategory = (categoryId) => {
+		setOpenCategories((prevOpenCategories) => ({
+			...prevOpenCategories,
+			[categoryId]: !prevOpenCategories[categoryId],
+		}));
+	};
+
 	return (
 		<section className="mt-8">
 			<div className="flex">
-				<div className="text-start">
+				<div className="mb-4 flex-1">
 					<SectionHeaders mainHeader="Rezeptbuch" />
 				</div>
-				<div className="flex ml-4">
-					<button
-						onClick={handleClearAll}
-						className="bg-red-500 text-white p-2 ml-6 rounded flex items-center "
-					>
-						<FaTrash />
-						Alle löschen
-					</button>
+				<div className=" ml-4">
+					<DeleteButton label="Alle löschen" onDelete={handleClearAll} />
 				</div>
 			</div>
 
 			{categories?.length > 0 &&
 				categories.map((categoryItem) => (
 					<div key={categoryItem._id}>
-						<div className="text-center mt-10">
-							<SectionHeaders mainHeader={categoryItem.name} />
+						<div className="text-center border rounded-md p-2 my-2 bg-gray-200 border-gray-300 shadow-md">
+							<div
+								className="flex items-center justify-between cursor-pointer"
+								onClick={() => toggleCategory(categoryItem._id)}
+							>
+								<SectionHeaders mainHeader={categoryItem.name} />
+								{openCategories[categoryItem._id] ? (
+									<ChevronUp />
+								) : (
+									<ChevronDown />
+								)}
+							</div>
 						</div>
-						<div className="mt-12">
-							{recipeBookItems?.length > 0 && (
-								<RecipeBookItemContainer
-									categoryItem={categoryItem}
-									recipeBookItems={recipeBookItems}
-									removeRecipeBookItem={(item) => removeRecipeBookItem(item)}
-									recipeBookItemsId={recipeBookItems._id}
-								/>
-							)}
-						</div>
+
+						{openCategories[categoryItem._id] && (
+							<div className="grid sm:grid-cols-3 gap-4 mt-6 mb-12">
+								{recipeBookItems?.length > 0 && (
+									<RecipeBookItemContainer
+										categoryItem={categoryItem}
+										recipeBookItems={recipeBookItems.filter(
+											(item) => item.category === categoryItem._id
+										)}
+										removeRecipeBookItem={(item) => removeRecipeBookItem(item)}
+									/>
+								)}
+							</div>
+						)}
 					</div>
 				))}
 		</section>

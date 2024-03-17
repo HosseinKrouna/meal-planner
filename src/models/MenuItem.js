@@ -11,6 +11,25 @@ const IngredientsGroupSchema = new Schema({
 	ingredients: [IngredientSchema],
 });
 
+const StepsSchema = new Schema({
+	stepName: String,
+	preparationDescription: String,
+});
+
+const PreparationTimeSchema = new Schema({
+	makeReadyTime: Number,
+	cookingBakingTime: Number,
+	brewingRestingTime: Number,
+});
+
+const NutritionalValuesSchema = new Schema({
+	calories: Number,
+	carbohydrates: Number,
+	protein: Number,
+	fat: Number,
+	fiber: Number,
+});
+
 const MenuItemSchema = new Schema(
 	{
 		image: { type: String },
@@ -19,6 +38,9 @@ const MenuItemSchema = new Schema(
 		category: { type: mongoose.Types.ObjectId },
 		numberOfPeople: { type: Number },
 		ingredientsList: [IngredientsGroupSchema],
+		preparation: PreparationTimeSchema,
+		steps: [StepsSchema],
+		nutritionalValuesPerServing: NutritionalValuesSchema,
 	},
 	{ timestamps: true }
 );
