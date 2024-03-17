@@ -15,7 +15,7 @@ function ShowRecipeItemPage() {
 	const [loading, setLoading] = useState(true);
 
 	const foundedRecipes = recipeBookItems
-		? recipeBookItems.filter((item) => item.name._id === id)
+		? recipeBookItems.filter((item) => item._id === id)
 		: [];
 
 	console.log("foundedRecipes: ", foundedRecipes);
@@ -48,21 +48,21 @@ function ShowRecipeItemPage() {
 		<section className="mt-8 mx-auto max-w-2xl">
 			<div className="text-center mb-8">
 				<Image
-					src={foundedRecipes[0]?.name?.image}
+					src={foundedRecipes[0]?.image}
 					alt="Recipe image"
 					width={600}
 					height={400}
 					className="rounded-lg mx-auto"
 				/>
 				<h1 className="text-4xl font-bold mt-4">
-					{foundedRecipes[0]?.name?.recipeName}
+					{foundedRecipes[0]?.recipeName}
 				</h1>
 				<p className="text-gray-600 mt-4 text-lg">
-					Zutaten für {foundedRecipes[0]?.name?.numberOfPeople} Personen
+					Zutaten für {foundedRecipes[0]?.numberOfPeople} Personen
 				</p>
 
 				<ul className="pl-6 mt-10 space-y-4">
-					{foundedRecipes[0]?.name?.ingredientsList.map((group, groupIndex) => (
+					{foundedRecipes[0]?.ingredientsList.map((group, groupIndex) => (
 						<li key={groupIndex} className="mb-2">
 							<div className="mb-4 mt-10">
 								<span className="font-semibold text-2xl">
@@ -114,17 +114,27 @@ function ShowRecipeItemPage() {
 					</div>
 					<div className="flex justify-center">
 						<div className="text-left text-green-600 font-semibold text-lg">
-							{foundedRecipes[0]?.name.preparation.makeReadyTime} Minuten
+							{foundedRecipes[0]?.preparation.makeReadyTime} Minuten
 						</div>
 					</div>
 				</div>
 				<div className=" mt-5">
-					<div className="w-1/2">
+					<div className="w-1/2 mr-5">
 						<span className="font-medium">Koch-/Backzeit</span>
 					</div>
 					<div className="flex justify-center">
 						<div className="text-left text-green-600 font-semibold text-lg">
-							{foundedRecipes[0]?.name.preparation.cookingBakingTime} Minuten
+							{foundedRecipes[0]?.preparation.cookingBakingTime} Minuten
+						</div>
+					</div>
+				</div>
+				<div className=" mt-5">
+					<div className="w-1/2 mr-5">
+						<span className="font-medium">Zieh-/Ruhezeit</span>
+					</div>
+					<div className="flex justify-center">
+						<div className="text-left text-green-600 font-semibold text-lg">
+							{foundedRecipes[0]?.preparation.brewingRestingTime} Minuten
 						</div>
 					</div>
 				</div>
@@ -132,7 +142,7 @@ function ShowRecipeItemPage() {
 
 			<div className="flex ">
 				<div className="mt-10">
-					{foundedRecipes[0]?.name.steps.map((step, index) => (
+					{foundedRecipes[0]?.steps.map((step, index) => (
 						<div key={index}>
 							<div className="mb-4 text-2xl mt-6 font-bold text-green-500">
 								{step.stepName}

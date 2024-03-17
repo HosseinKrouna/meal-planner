@@ -3,7 +3,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useState, useContext } from "react";
 import { RecipeBookContext } from "@/components/AppContext"; // Stelle sicher, dass der korrekte Pfad verwendet wird
 
-export default function AddToRecipeBookButton({ image }) {
+export default function AddToRecipeBookButton({ item, image, _id }) {
 	const [isAdded, setIsAdded] = useState(false);
 	const [showNotification, setShowNotification] = useState(false); // Neuer Zustand für die Benachrichtigung
 	const { recipeBookItems, addToRecipeBook } = useContext(RecipeBookContext);
@@ -11,11 +11,12 @@ export default function AddToRecipeBookButton({ image }) {
 
 	const handleButtonClick = async () => {
 		// Überprüfe, ob das Rezept bereits im Rezeptbuch vorhanden ist
-		const isRecipeInBook = recipeBookItems.some((item) => item.name === image);
+		const isRecipeInBook = recipeBookItems.some((item) => item._id === _id);
 
+		console.log(isRecipeInBook);
 		// Wenn das Rezept nicht im Rezeptbuch ist, füge es hinzu
 		if (!isRecipeInBook) {
-			addToRecipeBook(image);
+			addToRecipeBook(item);
 			setIsAdded(true);
 			await controls.start({ opacity: 1, y: -100, x: "100vw" });
 		} else {

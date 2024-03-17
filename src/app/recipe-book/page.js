@@ -102,9 +102,10 @@ export default function RecipeBookPage() {
 								{recipeBookItems?.length > 0 && (
 									<RecipeBookItemContainer
 										categoryItem={categoryItem}
-										recipeBookItems={recipeBookItems}
+										recipeBookItems={recipeBookItems.filter(
+											(item) => item.category === categoryItem._id
+										)}
 										removeRecipeBookItem={(item) => removeRecipeBookItem(item)}
-										recipeBookItemsId={recipeBookItems._id}
 									/>
 								)}
 							</div>

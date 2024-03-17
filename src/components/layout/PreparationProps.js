@@ -47,6 +47,13 @@ function PreparationProps({ preparation, setPreparation, steps, setSteps }) {
 		});
 	};
 
+	const handleBrewingRestingTimeChange = (e) => {
+		setPreparation({
+			...preparation,
+			brewingRestingTime: parseInt(e.target.value, 10),
+		});
+	};
+
 	return (
 		<div className="bg-gray-300 rounded-md p-2 mb-3">
 			<div className="mb-4">
@@ -71,6 +78,16 @@ function PreparationProps({ preparation, setPreparation, steps, setSteps }) {
 						className="rounded w-20 focus:outline-none text-center"
 						value={preparation.cookingBakingTime}
 						onChange={handleCookingBakingTimeChange}
+					/>
+					<span className="ml-2">Minuten</span>
+				</div>
+				<div className="rounded-md mb-4 flex items-center">
+					<label className="mr-2">Zieh-/Ruhezeit</label>
+					<input
+						type="number"
+						className="rounded w-20 focus:outline-none text-center"
+						value={preparation.brewingRestingTime}
+						onChange={handleBrewingRestingTimeChange}
 					/>
 					<span className="ml-2">Minuten</span>
 				</div>

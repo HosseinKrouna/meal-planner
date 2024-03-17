@@ -19,6 +19,7 @@ const StepsSchema = new Schema({
 const PreparationTimeSchema = new Schema({
 	makeReadyTime: Number,
 	cookingBakingTime: Number,
+	brewingRestingTime: Number,
 });
 
 const NutritionalValuesSchema = new Schema({

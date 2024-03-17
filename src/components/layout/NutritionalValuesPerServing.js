@@ -1,5 +1,5 @@
 function NutritionalValuesPerServing({ foundedRecipes }) {
-	const recipe = foundedRecipes[0]?.name.nutritionalValuesPerServing;
+	const recipe = foundedRecipes[0]?.nutritionalValuesPerServing;
 
 	return (
 		<>
